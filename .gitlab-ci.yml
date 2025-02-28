@@ -18,10 +18,10 @@ include:
 .docker_compose_run:
   before_script:
     - apt-get update && apt-get install -y openssh-client
+    - ssh $SSH_ADDRESS "mkdir home/prod"
   script:
-    - ssh $SSH_ADDRESS "mkdir /prod"
-    - scp -r . $SSH_ADDRESS:/prod
-    - ssh $SSH_ADDRESS "cd /prod && \ docker-compose down && \ docker-compose pull && \ docker-compose up -d"
+    - scp -r . $SSH_ADDRESS:home/prod
+    - ssh $SSH_ADDRESS "cd home/prod && \ docker-compose down && \ docker-compose pull && \ docker-compose up -d"
 
 stages:
   - build
