@@ -17,6 +17,7 @@ include:
 
 .docker_compose_run:
   script:
+    - AUTH_COMMAND="echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin";
     - scp -r . /prod
     - ssh $SSH_ADDRESS "cd /prod && \ docker-compose down && \ docker-compose pull && \ docker-compose up -d"
 
