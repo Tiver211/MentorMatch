@@ -49,7 +49,7 @@ build:
 deploy:
   stage: deploy
   extends:
-    - .docker_compose_run
+    - .docker_run
     - .global-variables
     - .rules-merge-or-master
   variables:
