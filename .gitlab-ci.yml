@@ -19,7 +19,7 @@ include:
   before_script:
     - apt-get update && apt-get install -y openssh-client
   script:
-    - scp -r . /prod
+    - scp -r . $SSH_ADDRESS:/prod
     - ssh $SSH_ADDRESS "cd /prod && \ docker-compose down && \ docker-compose pull && \ docker-compose up -d"
 
 stages:
