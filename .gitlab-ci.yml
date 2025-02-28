@@ -17,7 +17,8 @@ include:
 
 .docker_compose_run:
   script:
-    docker-compose up --build
+    - scp -r . /prod
+    - ssh $SSH_ADDRESS "cd /prod && \ docker-compose down && \ docker-compose pull && \ docker-compose up -d"
 
 stages:
   - build
