@@ -17,7 +17,7 @@ include:
 
 .docker_compose_run:
   before_script:
-    - apk add --no-cache openssh-client
+    - apt-get update && apt-get install -y openssh-client
   script:
     - scp -r . /prod
     - ssh $SSH_ADDRESS "cd /prod && \ docker-compose down && \ docker-compose pull && \ docker-compose up -d"
