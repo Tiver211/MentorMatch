@@ -16,6 +16,8 @@ include:
     POSTGRES_USERNAME: "$POSTGRES_USERNAME"
 
 .docker_compose_run:
+  extends:
+    .ssh
   before_script:
     - apt-get update && apt-get install -y openssh-client
   script:
