@@ -11,6 +11,13 @@ include:
     SSH_USER: "$ENV_SSH_USER"
     SSH_HOST: "$ENV_SSH_HOST"
     SSH_PRIVATE_KEY_BASE64: "$ENV_PRIVATE_KEY_BASE64"
+    POSTGRES_DATABASE: "$POSTGRES_DATABASE"
+    POSTGRES_PASSWORD: "$POSTGRES_PASSWORD"
+    POSTGRES_USERNAME: "$POSTGRES_USERNAME"
+
+.docker_compose_run:
+  script:
+    docker-compose up --build
 
 stages:
   - build
@@ -25,7 +32,7 @@ build:
 deploy:
   stage: deploy
   extends:
-    - .docker_run
+    - .docker_compose_run
     - .global-variables
     - .rules-merge-or-master
   variables:
