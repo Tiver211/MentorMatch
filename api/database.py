@@ -15,10 +15,11 @@ class User_table(Base):
     __tablename__ = "users"
 
     user_id: UUID = Column(UUIDP(as_uuid=True), primary_key=True)
+    login: str = Column(String, nullable=False, unique=True)
+    password: str = Column(String, nullable=False)
     first_name: str = Column(String, nullable=False)
     last_name: str = Column(String, nullable=False)
     age: int = Column(Integer, nullable=False)
-    school: str = Column(String, nullable=False)
 
 def get_db():
     db = SessionLocal()
