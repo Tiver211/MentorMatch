@@ -10,16 +10,11 @@
 			<p class="logo-title">MENTORMATCH</p>
 		</div>
 		<nav>
-			<ul>
-				<a href="#" class="active">Главная</a>
-				<a href="#">Наши менторы</a>
-				<a href="#">Стать ментором</a>
-				<a href="#">Профиль</a>
-			</ul>
+			{@render links()}
 		</nav>
-		<button class="auth-btn">
+		<a href="/signup" class="auth-btn">
 			<p>Авторизация</p>
-		</button>
+		</a>
 	</div>
 </header>
 
@@ -27,13 +22,19 @@
 
 <footer>
 	<div class="footer-links">
-		<a href="#">Главная</a>
-		<a href="#">Наши менторы</a>
-		<a href="#">Стать ментором</a>
-		<a href="#">Профиль</a>
+		{@render links()}
 	</div>
 	<p class="footer-notice">&copy; 2025 MentorMatch. Все права защищены.</p>
 </footer>
+
+{#snippet links()}
+	<ul>
+		<a href="/" class="active">Главная</a>
+		<a href="/mentors">Наши менторы</a>
+		<a href="/mentors/apply">Стать ментором</a>
+		<a href="/profile">Профиль</a>
+	</ul>
+{/snippet}
 
 <style lang="scss">
 	header {

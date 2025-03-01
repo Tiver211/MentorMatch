@@ -32,6 +32,6 @@
 	</section>
 
 	<section class="cta">
-		<button class="cta-btn">Найти ментора</button>
+		<a href="/mentors" class="cta-btn">Найти ментора</a>
 	</section>
 </main>
