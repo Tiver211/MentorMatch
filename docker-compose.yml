@@ -28,7 +28,7 @@ services:
     environment:
       - maildomain=prod-team-35-lg7sic6v.final.prodcontest.ru
       - smtp_user=MFS:${SMTP_PASSWORD}
-      - relayhost=[email-smtp.us-east-1.amazonaws.com]:587
+      - relayhost=[connect.smtp.bz]:2525
       - MYNETWORKS=0.0.0.0/0
       - ALLOWED_SENDER_DOMAINS=prod-team-35-lg7sic6v.final.prodcontest.ru
     ports:
