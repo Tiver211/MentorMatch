@@ -1,12 +1,31 @@
 <script lang="ts">
+	import { watch } from 'runed';
+
+	let { filter }: { filter?: boolean } = $props();
+
 	let mentors = [
 		{ name: 'Хто я?', age: 19, about: 'Гейдизайнер и разработчик на Godot' },
 		{ name: 'Человек', age: 999, about: 'Профессиональный бездельник' }
 	];
+	let mentorsFiltered = $state(mentors);
+
+	// filter fields
+	let ageThreshold: number | undefined = $state();
+
+	watch([() => ageThreshold], () => {
+		mentorsFiltered = mentors;
+		if (ageThreshold) mentorsFiltered = mentors.filter((mentor) => mentor.age >= ageThreshold!);
+	});
 </script>
 
+{#if filter}
+	<label for="age">
+		Возраст от
+		<input type="number" name="age" id="age" bind:value={ageThreshold} />
+	</label>
+{/if}
 <ul>
-	{#each mentors as { name, age, about }}
+	{#each mentorsFiltered as { name, age, about }}
 		<li>
 			<b>{name}</b>
 			<p>{age} лет</p>
@@ -27,7 +46,7 @@
 		padding: 0.5em;
 
 		border: 1px solid black;
-		border-radius: 0.5em;
+		border-radius: 0.25em;
 
 		list-style: none;
 	}
