@@ -22,8 +22,11 @@ services:
     ports:
       - "5432"
 
-  mailhog:
-    image: mailhog/mailhog:latest
-    container_name: mailhog
+  postfix:
+    image: catatnight/postfix
+    container_name: postfix
+    environment:
+      - maildomain=prod-team-35-lg7sic6v.final.prodcontest.ru
+      - smtp_user=MFS:${SMTP_PASSWORD}
     ports:
-      - "1025:1025"
+      - "25:25"
