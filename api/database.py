@@ -1,8 +1,9 @@
-from sqlalchemy.dialects.postgresql import UUID as UUIDP
-from sqlalchemy import Column, Integer, String, Text, BINARY, ARRAY, create_engine, ForeignKey
-from sqlalchemy.orm import declarative_base, sessionmaker, foreign
-from uuid import UUID
 import os
+from uuid import UUID
+
+from sqlalchemy import Column, Integer, String, Text, ARRAY, create_engine, ForeignKey
+from sqlalchemy.dialects.postgresql import UUID as UUIDP
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 Base = declarative_base()
 
@@ -16,23 +17,33 @@ class User_table(Base):
 
     user_id: UUID = Column(UUIDP(as_uuid=True), primary_key=True)
     login: str = Column(String, nullable=False, unique=True)
-    password: str = Column(BINARY, nullable=False)
+    password: str = Column(String, nullable=False)
     first_name: str = Column(String, nullable=False)
     last_name: str = Column(String, nullable=False)
     age: int = Column(Integer, nullable=False)
     about: str = Column(Text, nullable=True)
+    contact: str = Column(String, nullable=False)
 
 class Mentor_table(Base):
     __tablename__ = "mentors"
 
     mentor_id: UUID = Column(UUIDP(as_uuid=True), primary_key=True)
+    user_id: UUID = Column(UUIDP(as_uuid=True), ForeignKey('users.user_id', ondelete='CASCADE'), nullable=False)
+    direction: str = Column(ARRAY(String), nullable=False)
+
+class Students_table(Base):
+    __tablename__ = "students"
+
+    id: UUID = Column(UUIDP(as_uuid=True), primary_key=True)
+    mentor_id: UUID = Column(UUIDP(as_uuid=True), ForeignKey('mentors.mentor_id', ondelete='CASCADE'), nullable=False)
+    user_id: UUID = Column(UUIDP(as_uuid=True), ForeignKey('users.user_id', ondelete='CASCADE'), nullable=False)
+
+class Admin_table(Base):
+    __tablename__ = "admins"
+
+    admin_id = Column(UUIDP(as_uuid=True), primary_key=True)
     login: str = Column(String, nullable=False, unique=True)
     password: str = Column(String, nullable=False)
-    first_name: str = Column(String, nullable=False)
-    last_name: str = Column(String, nullable=False)
-    age: int = Column(Integer, nullable=False)
-    about: str = Column(Text, nullable=False)
-    direction: str = Column(ARRAY(String), nullable=False)
 
 class Mentors_requests_table(Base):
     __tablename__ = "mentorRequests"
