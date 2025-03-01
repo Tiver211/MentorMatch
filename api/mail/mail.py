@@ -2,9 +2,9 @@ import os
 import smtplib
 from email.mime.text import MIMEText
 
-SMTP_HOST = "mailhog"
+SMTP_HOST = "postfix"
 SMTP_PORT = 1025
-SMTP_USER = "noreply"
+SMTP_USER = "noreply@prod-team-35-lg7sic6v.final.prodcontest.ru"
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 
 def send_email(target: str, title: str, body: str):
