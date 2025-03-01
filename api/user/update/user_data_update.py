@@ -16,9 +16,9 @@ user_update_data_patch = APIRouter()
 def post_user(user: User, db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 
-    data = jwt.decode(token, algorithms="HS256")
+    data = jwt.decode(token, os.getenv("RANDOM_SECRET"), algorithms=['HS256'])
 
-    user_db = db.query(User_table).filter(User_table.login == data.login).first()
+    user_db = db.query(User_table).filter(User_table.login == data["login"]).first()
 
     user_db.first_name = user.first_name if user.first_name else user_db.first_name
     user_db.last_name = user.last_name if user.last_name else user_db.last_name
