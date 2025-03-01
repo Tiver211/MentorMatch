@@ -1,5 +1,5 @@
 from sqlalchemy.dialects.postgresql import UUID as UUIDP
-from sqlalchemy import Column, Integer, String, Text, create_engine
+from sqlalchemy import Column, Integer, String, Text, BINARY, create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 from uuid import UUID
 import os
@@ -16,7 +16,7 @@ class User_table(Base):
 
     user_id: UUID = Column(UUIDP(as_uuid=True), primary_key=True)
     login: str = Column(String, nullable=False, unique=True)
-    password: str = Column(String, nullable=False)
+    password: str = Column(BINARY, nullable=False)
     first_name: str = Column(String, nullable=False)
     last_name: str = Column(String, nullable=False)
     age: int = Column(Integer, nullable=False)
