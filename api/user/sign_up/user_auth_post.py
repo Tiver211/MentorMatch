@@ -23,7 +23,7 @@ def post_user(user: User, db: Session = Depends(get_db)):
         first_name=user.first_name,
         last_name=user.last_name,
         age=user.age,
-        school=user.school
+        about=user.about
     )
 
     db.add(new_user)
