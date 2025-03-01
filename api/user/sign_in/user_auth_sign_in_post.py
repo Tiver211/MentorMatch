@@ -10,11 +10,13 @@ from ...database import get_db, User_table
 from uuid import uuid4
 
 from api.user.sign_in.base_model import User
+from api.mail.mail import send_email
 
 user_auth_sign_in_router = APIRouter()
 
 @user_auth_sign_in_router.post("/user/auth/sign-in")
 def post_user(user: User, db: Session = Depends(get_db)):
+    send_email("tiver211@yandex.ru", "test", "tets")
     user_db = db.query(User_table).filter(User_table.login == user.login).first()
 
     if not user_db:
