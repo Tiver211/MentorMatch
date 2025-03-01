@@ -5,8 +5,12 @@ services:
       POSTGRES_CONN: ${POSTGRES_CONN}
       RANDOM_SECRET: ${RANDOM_SECRET}
 
+    volumes:
+      - /home/ubuntu/ssl/cert.pem:/api/ssl/cert.pem
+      - /home/ubuntu/ssl/privkey.pem:/api/ssl/privkey.pem
+
     ports:
-      - "80:80"
+      - "443:443"
 
   postgres:
     image: postgres:15
