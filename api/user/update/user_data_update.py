@@ -1,14 +1,12 @@
 import os
-import bcrypt
-from fastapi import APIRouter, Depends, Header
-from sqlalchemy.orm import Session
-from datetime import datetime, timedelta
+
 import jwt
+from fastapi import APIRouter, Depends, Header
 from fastapi.responses import JSONResponse
-from ...database import get_db, User_table
-from uuid import uuid4
+from sqlalchemy.orm import Session
 
 from api.user.sign_up.base_model import User
+from ...database import get_db, User_table
 
 user_update_data_patch = APIRouter()
 
