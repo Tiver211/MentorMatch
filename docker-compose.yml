@@ -7,7 +7,7 @@ services:
 
     volumes:
       - /home/ubuntu/ssl/cert.pem:/api/ssl/cert.pem
-      - /home/ubuntu/ssl/fullchain.pem:/api/ssl/fullchain.pem
+      - /home/ubuntu/ssl/privkey.pem:/api/ssl/privkey.pem
 
     ports:
       - "443:443"
