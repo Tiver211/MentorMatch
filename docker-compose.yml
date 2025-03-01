@@ -26,7 +26,7 @@ services:
     image: catatnight/postfix
     container_name: postfix
     environment:
-      - maildomain=prod-team-35-lg7sic6v.final.prodcontest.ru
-      - smtp_user=MFS:${SMTP_PASSWORD}
+      maildomain: prod-team-35-lg7sic6v.final.prodcontest.ru
+      smtp_user: MFS:${SMTP_PASSWORD}
     ports:
       - "25:25"
