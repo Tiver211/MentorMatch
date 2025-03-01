@@ -4,6 +4,7 @@ services:
     environment:
       POSTGRES_CONN: ${POSTGRES_CONN}
       RANDOM_SECRET: ${RANDOM_SECRET}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
 
     volumes:
       - /home/ubuntu/ssl/cert.pem:/api/ssl/cert.pem
@@ -20,3 +21,9 @@ services:
       POSTGRES_DB: ${POSTGRES_DATABASE}
     ports:
       - "5432"
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    ports:
+      - "1025:1025"
