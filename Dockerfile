@@ -9,4 +9,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app
 
 EXPOSE 80
-CMD ["uvicorn", "api.main:app", "--port", "80", "--host=0.0.0.0", "--root-path", "/api", "--ssl-certfile", "api/ssl/cert.pem", "--ssl-keyfile", "api/ssl/fullchain.pem"]
+CMD ["uvicorn", "api.main:app", "--port", "80", "--host=0.0.0.0", "--root-path", "/api", "--ssl-certfile", "/api/ssl/cert.pem", "--ssl-keyfile", "/api/ssl/fullchain.pem"]
