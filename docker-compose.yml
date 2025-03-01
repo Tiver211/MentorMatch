@@ -1,6 +1,6 @@
 services:
   api:
-    image: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
+    image: "${CI_REGISTRY}/${CI_PROJECT_PATH}:${CI_COMMIT_SHA}"
 
   #web:
   #  build: ./web
