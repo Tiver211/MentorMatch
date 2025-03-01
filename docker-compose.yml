@@ -6,8 +6,8 @@ services:
       RANDOM_SECRET: ${RANDOM_SECRET}
 
     volumes:
-      - /home/ubuntu/ssl/cert.pem:/api/ssl/cert.pem
-      - /home/ubuntu/ssl/fullchain.pem:/api/ssl/fullchain.pem
+      - /home/ubuntu/ssl/cert.pem:api/ssl/cert.pem
+      - /home/ubuntu/ssl/fullchain.pem:api/ssl/fullchain.pem
 
     ports:
       - "80:80"
