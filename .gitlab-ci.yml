@@ -15,26 +15,26 @@ include:
     POSTGRES_PASSWORD: "$POSTGRES_PASSWORD"
     POSTGRES_USERNAME: "$POSTGRES_USERNAME"
 
-.docker_compose_run:
-  extends: .ssh
-  stage: deploy
-  variables:
-    OPT_DOCKER: ""
-    DOCKERFILE_PATH: Dockerfile
-    IMAGE_TAG: $CI_COMMIT_SHA
-    IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    DOCKER_HOST: tcp://docker:2376
-    DOCKER_TLS_CERTDIR: "/certs"
-    DOCKER_TLS_VERIFY: 1
-    DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
-    DOCKER_DRIVER: overlay2
-    PRUNE_COMMAND: "docker system prune -f -a"
-    CONTAINER_NAME_SUFFIX: ""
+#.docker_compose_run:
+#  extends: .ssh
+#  stage: deploy
+#  variables:
+#    OPT_DOCKER: ""
+#    DOCKERFILE_PATH: Dockerfile
+#    IMAGE_TAG: $CI_COMMIT_SHA
+#    IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+#    DOCKER_HOST: tcp://docker:2376
+#    DOCKER_TLS_CERTDIR: "/certs"
+#    DOCKER_TLS_VERIFY: 1
+#    DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
+#    DOCKER_DRIVER: overlay2
+#    PRUNE_COMMAND: "docker system prune -f -a"
+#    CONTAINER_NAME_SUFFIX: ""
 
-  script:
-    - ssh $SSH_ADDRESS "mkdir /prod"
-    - scp -r . $SSH_ADDRESS:home/prod
-    - ssh $SSH_ADDRESS "cd home/prod && \ docker-compose down && \ docker-compose pull && \ docker-compose up -d"
+ # script:
+ #   - ssh $SSH_ADDRESS "mkdir /prod"
+ #   - scp -r . $SSH_ADDRESS:home/prod
+ #   - ssh $SSH_ADDRESS "cd home/prod && \ docker-compose down && \ docker-compose pull && \ docker-compose up -d"
 
 stages:
   - build
