@@ -15,8 +15,6 @@ user_auth_sign_in_router = APIRouter()
 
 @user_auth_sign_in_router.post("/user/auth/sign-in")
 def post_user(user: User, db: Session = Depends(get_db)):
-    hashed_password = bcrypt.hashpw(user.password.encode(), bcrypt.gensalt(rounds=4))
-
     user_db = db.query(User_table).filter(User_table.login == user.login).first()
 
     if not user_db:
