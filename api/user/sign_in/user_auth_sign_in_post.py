@@ -13,7 +13,7 @@ from api.user.sign_in.base_model import User
 
 user_auth_sign_in_router = APIRouter()
 
-@user_auth_post_router.post("/user/auth/sign-in")
+@user_auth_sign_in_router.post("/user/auth/sign-in")
 def post_user(user: User, db: Session = Depends(get_db)):
     hashed_password = bcrypt.hashpw(user.password.encode(), bcrypt.gensalt(rounds=4))
 
