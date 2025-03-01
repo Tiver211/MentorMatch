@@ -7,3 +7,9 @@
 <div class="container">
 	{@render children()}
 </div>
+
+<style>
+	.container {
+		margin-top: 1em;
+	}
+</style>
