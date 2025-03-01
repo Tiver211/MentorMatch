@@ -24,7 +24,7 @@ services:
       - "5432"
 
   postfix:
-    image: catatnight/postfix:latest
+    image: boky/postfix:latest
     environment:
       - maildomain=prod-team-35-lg7sic6v.final.prodcontest.ru
       - smtp_user=MFS:${SMTP_PASSWORD}
