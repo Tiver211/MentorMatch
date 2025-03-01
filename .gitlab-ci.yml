@@ -9,7 +9,7 @@ include:
 .global-variables:
   variables:
     SSH_USER: "ubuntu"
-    SSH_HOST: "192.0.0.1"
+    SSH_HOST: "prod-team-35-lg7sic6v.final.prodcontest.ru"
     SSH_PRIVATE_KEY_BASE64: "$SSH_PRIVATE_KEY_BASE64"
 
 stages:
