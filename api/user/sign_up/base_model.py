@@ -10,3 +10,4 @@ class User(BaseModel):
     last_name: str
     age: int = Field(ge=0)
     about: Optional[str] = None
+    contact: str
