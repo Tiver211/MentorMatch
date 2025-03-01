@@ -10,7 +10,7 @@ services:
       - /home/ubuntu/ssl/fullchain.pem:/api/ssl/fullchain.pem
 
     ports:
-      - "80:80"
+      - "443:443"
 
   postgres:
     image: postgres:15
