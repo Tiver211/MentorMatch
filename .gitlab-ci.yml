@@ -31,6 +31,7 @@ include:
     POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     POSTGRES_DATABASE: $POSTGRES_DATABASE
   script:
+    - ssh $SSH_ADDRESS "export IMAGE_NAME='$IMAGE_NAME'"
     - AUTH_COMMAND="echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin"
     - ssh $SSH_ADDRESS "$AUTH_COMMAND"
     - ssh $SSH_ADDRESS "docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
