@@ -7,7 +7,6 @@ import jwt
 from fastapi.responses import JSONResponse
 from ...database import get_db, User_table, Mentor_table, Offer_table
 from uuid import uuid4
-
 post_offer_router = APIRouter()
 
 @post_offer_router.post("mentors/offer")
