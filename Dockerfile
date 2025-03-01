@@ -10,9 +10,9 @@ RUN apt-get update \
 
 RUN pip install --no-cache-dir poetry
 
-COPY requirements.txt .
+#COPY requirements.txt .
 
-RUN pip install -r requirements.txt
+#RUN pip install -r requirements.txt
 
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-root --only main
