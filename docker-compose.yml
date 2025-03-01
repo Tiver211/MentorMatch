@@ -1,7 +1,8 @@
 services:
   api:
     image: ${IMAGE_NAME}
-
+    environment:
+      POSTGRES_CONN: ${POSTGRES_CONN}
   #web:
   #  build: ./web
 
