@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir poetry
 
 COPY requirements.txt .
 
-RUN pip install --no-cache-dir requirements.txt
+RUN pip install -r requirements.txt
 
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-root --only main
