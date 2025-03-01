@@ -3,6 +3,9 @@ services:
     image: ${IMAGE_NAME}
     environment:
       POSTGRES_CONN: ${POSTGRES_CONN}
+
+    ports:
+      - "80:80"
   #web:
   #  build: ./web
 
