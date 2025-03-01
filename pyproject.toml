@@ -3,7 +3,7 @@ name = "mentors-for-students"
 version = "1.0.0"
 description = "Mentors fot students"
 authors = ["AKRBOUT"]
-packages = [{ include = "simple-avatars" }]
+packages = [{ include = "mentors-for-students" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
