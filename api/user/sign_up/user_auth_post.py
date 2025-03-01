@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 import jwt
 from fastapi.responses import JSONResponse
-from api.database import get_db, User_table
+from ...database import get_db, User_table
 from uuid import uuid4
 
 from api.user.sign_up.base_model import User

@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 import uvicorn
 import os
-from api.database import init_db
-
-from user.user_router import user_router
+from .database import init_db
+from .user.user_router import user_router
 
 app = FastAPI()
 

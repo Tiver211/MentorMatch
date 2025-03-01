@@ -4,3 +4,4 @@ uvicorn
 pydantic
 PyJWT
 bcrypt
+psycopg2-binary

@@ -6,17 +6,15 @@ from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 import jwt
 from fastapi.responses import JSONResponse
-from api.database import get_db, User_table
+from ...database import get_db, User_table
 from uuid import uuid4
 
 from api.user.sign_in.base_model import User
 
 user_auth_sign_in_router = APIRouter()
 
-@user_auth_post_router.post("/user/auth/sign-in")
+@user_auth_sign_in_router.post("/user/auth/sign-in")
 def post_user(user: User, db: Session = Depends(get_db)):
-    hashed_password = bcrypt.hashpw(user.password.encode(), bcrypt.gensalt(rounds=4))
-
     user_db = db.query(User_table).filter(User_table.login == user.login).first()
 
     if not user_db:
