@@ -37,7 +37,7 @@ include:
     - ssh $SSH_ADDRESS "docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
     - ssh $SSH_ADDRESS "mkdir -p /home/ubuntu/$CI_PROJECT_NAME"
     - scp docker-compose.yml $SSH_ADDRESS:/home/ubuntu/$CI_PROJECT_NAME/docker-compose.yml
-    - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && echo 'IMAGE_NAME=$IMAGE_NAME' >> .env  
+    - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && echo 'IMAGE_NAME=$IMAGE_NAME' > .env  
         && echo 'POSTGRES_DATABASE=$POSTGRES_DATABASE' >> .env 
         && echo 'POSTGRES_USERNAME=$POSTGRES_USERNAME' >> .env 
         && echo 'POSTGRES_PASSWORD=$POSTGRES_PASSWORD' >> .env 
