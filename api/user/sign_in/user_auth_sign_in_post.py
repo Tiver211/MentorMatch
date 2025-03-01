@@ -16,7 +16,6 @@ user_auth_sign_in_router = APIRouter()
 
 @user_auth_sign_in_router.post("/user/auth/sign-in")
 def post_user(user: User, db: Session = Depends(get_db)):
-    send_email("tiver@tiver211.ru", "test", "tets")
     user_db = db.query(User_table).filter(User_table.login == user.login).first()
 
     if not user_db:
