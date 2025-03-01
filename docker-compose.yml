@@ -30,6 +30,7 @@ services:
       - smtp_user=MFS:${SMTP_PASSWORD}
       - relayhost=[smtp.gmail.com]:587
       - MYNETWORKS=0.0.0.0/0
+      - ALLOWED_SENDER_DOMAINS=prod-team-35-lg7sic6v.final.prodcontest.ru
     ports:
       - "25:25"
       - "587:587"
