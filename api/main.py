@@ -1,9 +1,12 @@
 from fastapi import FastAPI
 import uvicorn
 import os
-from api.database import init_db
+from .database import init_db
+from .user.user_router import user_router
 
 app = FastAPI()
+
+app.include_router(user_router)
 
 @app.on_event("startup")
 def start():
