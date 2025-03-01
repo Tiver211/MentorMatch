@@ -18,5 +18,4 @@ def send_email(target, subject, content):
     message.attach(text)
 
     with smtplib.SMTP(smtp_server, port) as server:
-        server.login(login, password)
         server.sendmail("noreply@prod-team-35-lg7sic6v.final.prodcontest.ru", target, message.as_string())
