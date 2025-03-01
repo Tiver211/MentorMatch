@@ -1,15 +1,14 @@
 import os
-from http.client import HTTPException
-import bcrypt
-from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
+
+import bcrypt
 import jwt
+from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
-from ...database import get_db, User_table
-from uuid import uuid4
+from sqlalchemy.orm import Session
 
 from api.user.sign_in.base_model import User
+from ...database import get_db, User_table
 
 user_auth_sign_in_router = APIRouter()
 

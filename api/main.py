@@ -1,6 +1,8 @@
-from fastapi import FastAPI
-import uvicorn
 import os
+
+import uvicorn
+from fastapi import FastAPI
+
 from .database import init_db
 from .user.user_router import user_router
 
