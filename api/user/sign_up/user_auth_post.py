@@ -23,7 +23,7 @@ def post_user(user: User, db: Session = Depends(get_db)):
         first_name=user.first_name,
         last_name=user.last_name,
         age=user.age,
-        school=user.school
+        about=user.about
     )
 
     db.add(new_user)
@@ -38,7 +38,7 @@ def post_user(user: User, db: Session = Depends(get_db)):
 
     token_payload = {
         "sub": data,
-        "exp": datetime.utcnow() + timedelta(hours=1)
+        "exp": datetime.utcnow() + timedelta(days=365)
     }
     token = jwt.encode(token_payload, os.getenv("RANDOM_SECRET"), algorithm='HS256')
 
