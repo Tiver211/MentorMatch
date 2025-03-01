@@ -9,7 +9,7 @@ login = "MFS"
 password = os.getenv("SMTP_PASSWORD")  # Пароль для SMTP
 
 
-def send_mail(target, subject, content):
+def send_email(target, subject, content):
     message = MIMEMultipart("alternative")
     message["Subject"] = subject
     message["From"] = "noreply@prod-team-35-lg7sic6v.final.prodcontest.ru"
