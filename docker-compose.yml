@@ -3,11 +3,10 @@ services:
     image: ${IMAGE_NAME}
     environment:
       POSTGRES_CONN: ${POSTGRES_CONN}
+      RANDOM_SECRET: ${RANDOM_SECRET}
 
     ports:
       - "80:80"
-  #web:
-  #  build: ./web
 
   postgres:
     image: postgres:15
