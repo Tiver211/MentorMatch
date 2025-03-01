@@ -3,4 +3,4 @@
 </script>
 
 <h1>Список доступных менторов</h1>
-<MentorsList />
+<MentorsList filter />
