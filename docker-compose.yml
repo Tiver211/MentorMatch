@@ -19,13 +19,20 @@ services:
       POSTGRES_USER: ${POSTGRES_USERNAME}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DATABASE}
+      SMTP_USER: ${SMTP_PASSWORD}
     ports:
       - "5432"
 
   postfix:
-    image: catatnight/postfix
+    image: catatnight/postfix:latest
     environment:
-      maildomain: prod-team-35-lg7sic6v.final.prodcontest.ru
-      smtp_user: MFS:${SMTP_PASSWORD}
+      - maildomain=prod-team-35-lg7sic6v.final.prodcontest.ru
+      - smtp_user=MFS:${SMTP_PASSWORD}
+      - relayhost=[smtp.gmail.com]:587
+      - MYNETWORKS=0.0.0.0/0
     ports:
       - "25:25"
+      - "587:587"
+    volumes:
+      - ./postfix-data:/var/spool/postfix
+    restart: always
