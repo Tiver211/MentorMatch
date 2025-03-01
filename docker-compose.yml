@@ -5,6 +5,9 @@ services:
       POSTGRES_CONN: ${POSTGRES_CONN}
       RANDOM_SECRET: ${RANDOM_SECRET}
 
+    volumes:
+      - /home/ubuntu/ssl:/api/ssl
+
     ports:
       - "80:80"
 
