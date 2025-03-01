@@ -35,6 +35,3 @@ services:
       - "25:25"
       - "587:587"
       - "2525:2525"
-    volumes:
-      - ./postfix-data:/var/spool/postfix
-    restart: always
