@@ -1,3 +1,4 @@
+from sqlalchemy.dialects.mysql import LONGTEXT
 from sqlalchemy.dialects.postgresql import UUID as UUIDP
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
@@ -20,6 +21,7 @@ class User_table(Base):
     first_name: str = Column(String, nullable=False)
     last_name: str = Column(String, nullable=False)
     age: int = Column(Integer, nullable=False)
+    about: str = Column(LONGTEXT, nullable=True)
 
 def get_db():
     db = SessionLocal()
