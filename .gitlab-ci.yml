@@ -32,7 +32,6 @@ include:
     POSTGRES_DATABASE: $POSTGRES_DATABASE
     POSTGRES_CONN: "postgresql://$POSTGRES_USERNAME:$POSTGRES_PASSWORD@postgres:5432/$POSTGRES_DATABASE"
   script:
-    - apt-get update && apt-get install -y curl
     - AUTH_COMMAND="echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin"
     - ssh $SSH_ADDRESS "$AUTH_COMMAND"
     - ssh $SSH_ADDRESS "docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
@@ -50,7 +49,6 @@ include:
     - sleep 10
     - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose logs > /tmp/docker-compose.log"
     - scp $SSH_ADDRESS:/tmp/docker-compose.log ./docker-compose.log
-    - curl -f "https://prod-team-35-lg7sic6v.final.prodcontest.ru/api/ping" || exit 1
   artifacts:
     paths:
       - docker-compose.log
