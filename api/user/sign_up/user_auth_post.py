@@ -16,7 +16,7 @@ from ...database import get_db, User_table, get_cache
 user_auth_post_router = APIRouter()
 
 @user_auth_post_router.post("/user/auth/sign-up")
-def post_user(user: User, db: Session = Depends(get_db), redis_client: redis.Redis = Depends(get_cache())):
+def post_user(user: User, db: Session = Depends(get_db), redis_client: redis.Redis = Depends(get_cache)):
     user_db = db.query(User_table).filter(User_table.login == user.login).first()
     if user_db:
         return JSONResponse(status_code=409, content={"status": "Login already exists"})
