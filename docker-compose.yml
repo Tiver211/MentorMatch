@@ -19,11 +19,19 @@ services:
       POSTGRES_USER: ${POSTGRES_USERNAME}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DATABASE}
+      SMTP_USER: ${SMTP_PASSWORD}
     ports:
       - "5432"
 
-  mailhog:
-    image: mailhog/mailhog:latest
-    container_name: mailhog
+  postfix:
+    image: boky/postfix:latest
+    environment:
+      - maildomain=prod-team-35-lg7sic6v.final.prodcontest.ru
+      - smtp_user=MFS:${SMTP_PASSWORD}
+      - relayhost=[connect.smtp.bz]:2525
+      - MYNETWORKS=0.0.0.0/0
+      - ALLOWED_SENDER_DOMAINS=prod-team-35-lg7sic6v.final.prodcontest.ru
     ports:
-      - "1025:1025"
+      - "25:25"
+      - "587:587"
+      - "2525:2525"
