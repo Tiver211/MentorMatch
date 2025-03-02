@@ -19,11 +19,13 @@ app.include_router(admin_router)
 app.include_router(mentor_router)
 
 @app.on_event("startup")
-def start(db: Session = Depends(get_db)):
+def start():
     init_db()
 
     admin = Admin_table(admin_id=uuid4(), login="admin",
                         password=b'$2b$04$JKKcKcM0w0LUdVKm0zKuc.kw0W/heG6N6bt.yWrkPGuCMsrw9MwOK')
+
+    db: Session = Depends(get_db)
 
     db.add(admin)
     db.commit()
