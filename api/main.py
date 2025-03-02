@@ -1,12 +1,16 @@
-from fastapi import FastAPI
-import uvicorn
 import os
+
+import uvicorn
+from fastapi import FastAPI
+
 from .database import init_db
 from .user.user_router import user_router
+from .offer.offer_router import offer_router
 
 app = FastAPI()
 
 app.include_router(user_router)
+app.include_router(offer_router)
 
 @app.on_event("startup")
 def start():

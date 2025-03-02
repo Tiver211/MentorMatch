@@ -1,13 +1,11 @@
 import os
-from http.client import HTTPException
-import bcrypt
-from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
+
+import bcrypt
 import jwt
+from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
-from ...database import get_db, User_table
-from uuid import uuid4
+from sqlalchemy.orm import Session
 
 from api.user.sign_in.base_model import User
 from api.mail.mail import send_email
@@ -21,7 +19,7 @@ def post_user(user: User, db: Session = Depends(get_db)):
     if not user_db:
         return JSONResponse(status_code=404, content={"status": "User was not found"})
 
-    if not(bcrypt.checkpw(user.password.encode(), bytes(user_db.password, "utf-8"))):
+    if not(bcrypt.checkpw(user.password.encode("utf-8"), bytes(user_db.password, "utf-8"))):
         return JSONResponse(status_code=403, content={"status": "Invalid password"})
 
     data = \
