@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from pydantic import UUID
+from uuid import UUID
 
 
 class Answer(BaseModel):
