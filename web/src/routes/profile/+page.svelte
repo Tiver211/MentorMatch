@@ -4,5 +4,6 @@
 	value="Выйти из аккаунта"
 	onclick={() => {
 		localStorage.removeItem('loggedIn');
+		window.location.href = '/';
 	}}
 />
