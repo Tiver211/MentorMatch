@@ -34,7 +34,7 @@ services:
     command: ["redis-server", "--port", "6380"]
 
   haraka:
-    image: haraka/haraka:latest
+    image: phips/haraka:latest
     ports:
       - "25:25"
       - "587:587"
