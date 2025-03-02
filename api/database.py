@@ -1,7 +1,9 @@
+import datetime
 import os
 from uuid import UUID
 
-from sqlalchemy import Column, Integer, String, Text, ARRAY, create_engine, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, ARRAY, create_engine, ForeignKey, Boolean
+from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy.dialects.postgresql import UUID as UUIDP
 from sqlalchemy.orm import declarative_base, sessionmaker
 
@@ -51,6 +53,8 @@ class Mentors_requests_table(Base):
     request_id: UUID = Column(UUIDP(as_uuid=True), primary_key=True)
     about: str = Column(Text, nullable=False)
     direction: str = Column(ARRAY(String), nullable=False)
+    date: datetime.datetime = Column(TIMESTAMP, default=datetime.datetime.now(), nullable=False)
+    status: bool = Column(Boolean, default=False, nullable=False)
 
 class Offer_table(Base):
     __tablename__ = "offers"
@@ -59,6 +63,8 @@ class Offer_table(Base):
     mentor_id: UUID = Column(UUIDP(as_uuid=True), ForeignKey('mentors.mentor_id', ondelete='CASCADE'), nullable=False)
     user_id: UUID = Column(UUIDP(as_uuid=True), ForeignKey('users.user_id', ondelete='CASCADE'), nullable=False)
     message: str = Column(Text, nullable=True)
+    status: bool = Column(Boolean, default=False, nullable=False)
+    date: datetime.datetime = Column(TIMESTAMP, default=datetime.datetime.now(), nullable=False)
 
 def get_db():
     db = SessionLocal()
