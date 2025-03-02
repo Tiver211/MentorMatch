@@ -13,7 +13,7 @@ from ...database import get_db, User_table
 
 get_avatar_router = APIRouter()
 
-@get_avatar_router.get("user/avatar/{user_id}")
+@get_avatar_router.get("/user/avatar/{user_id}")
 def get_image(user_id: UUID, db: Session = Depends(get_db)):
     user: User_table | None = db.query(User_table).filter(User_table.user_id == user_id).first()
 
@@ -28,7 +28,7 @@ def get_image(user_id: UUID, db: Session = Depends(get_db)):
 
     return FileResponse(temp_file_path, media_type="image/png", filename="image.png")
 
-@get_avatar_router.put("user/avatar")
+@get_avatar_router.put("/user/avatar")
 def send_image(file: bytes = File(), db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 
