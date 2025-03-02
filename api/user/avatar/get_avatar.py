@@ -29,7 +29,7 @@ def get_image(user_id: UUID, db: Session = Depends(get_db)):
     return FileResponse(temp_file_path, media_type="image/png", filename="image.png")
 
 @get_avatar_router.put("/user/avatar")
-def send_image(file: bytes = File(), db: Session = Depends(get_db), authorization: str = Header(...)):
+def send_image(file: UploadFile, db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 
     data = jwt.decode(token, os.getenv("RANDOM_SECRET"), algorithms=['HS256'])
