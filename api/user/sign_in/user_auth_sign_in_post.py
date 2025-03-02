@@ -15,7 +15,7 @@ user_auth_sign_in_router = APIRouter()
 
 @user_auth_sign_in_router.post("/user/auth/sign-in")
 def post_user(user: User, db: Session = Depends(get_db)):
-    user_db = db.query(User_table).filter(User_table.login == user.login).first()
+    user_db = db.query(User_table).filter_by(login=user.login, is_active=True).first()
 
     if not user_db:
         return JSONResponse(status_code=404, content={"status": "User was not found"})
