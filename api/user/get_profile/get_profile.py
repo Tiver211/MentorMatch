@@ -12,15 +12,13 @@ from ...database import get_db, User_table
 
 get_profile_router = APIRouter()
 
-@get_profile_router.get("profile")
+@get_profile_router.get("/user/profile")
 def get_users(db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 
     data = jwt.decode(token, os.getenv("RANDOM_SECRET"), algorithms=['HS256'])
 
-    user_db = db.query(User_table).filter(User_table.login == data["login"]).first()
-
-    user = db.query(User_table).filter(User_table.user_id == user_db.user_id).first()
+    user = db.query(User_table).filter(User_table.user_id == data["sub"]).first()
 
     if not user:
         return JSONResponse(status_code=404, content={"status": "User not found"})

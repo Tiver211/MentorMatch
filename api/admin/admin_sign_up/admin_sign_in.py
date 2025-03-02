@@ -22,14 +22,8 @@ def post_admin(admin: Admin, db: Session = Depends(get_db)):
     if not(bcrypt.checkpw(admin.password.encode(), bytes(admin_db.password, "utf-8"))):
         return JSONResponse(status_code=403, content={"status": "Invalid password"})
 
-    data = \
-        {
-            "admin_id": str(admin_db.admin_id),
-            "login": admin_db.login
-        }
-
     token_payload = {
-        "sub": data,
+        "sub": str(admin_db.admin_id),
         "exp": datetime.utcnow() + timedelta(days=365)
     }
     token = jwt.encode(token_payload, os.getenv("RANDOM_SECRET"), algorithm='HS256')
