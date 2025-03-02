@@ -9,7 +9,7 @@ from ...database import get_db, User_table
 
 get_users_router = APIRouter()
 
-@get_users_router.get("admin/secreturl/users")
+@get_users_router.get("/admin/secreturl/users")
 def get_users(
     db: Session = Depends(get_db),
     sort_by: Optional[str] = Query(None),

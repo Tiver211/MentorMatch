@@ -15,7 +15,7 @@ from ...database import get_db, User_table, Mentors_requests_table
 
 send_request_router = APIRouter()
 
-@send_request_router.post("mentors/request")
+@send_request_router.post("/mentors/request")
 def send_request(request: Request, db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 

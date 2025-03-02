@@ -10,7 +10,7 @@ from ...database import get_db, User_table
 
 get_user_router = APIRouter()
 
-@get_user_router.get("admin/secreturl/users/{user_id}")
+@get_user_router.get("/admin/secreturl/users/{user_id}")
 def get_users(user_id: UUID, db: Session = Depends(get_db)):
     user = db.query(User_table).filter(User_table.user_id == user_id).first()
 

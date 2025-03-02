@@ -11,7 +11,7 @@ from ...database import get_db, User_table, Mentor_table, Offer_table
 
 get_offers_router = APIRouter()
 
-@get_offers_router.get("user/offers")
+@get_offers_router.get("/user/offers")
 def get_mentors(db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 

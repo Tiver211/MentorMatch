@@ -13,7 +13,7 @@ from api.mail.mail import send_email
 
 post_offer_router = APIRouter()
 
-@post_offer_router.post("mentors/offer")
+@post_offer_router.post("/mentors/offer")
 def post_offer(offer: Offer, db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 
