@@ -28,14 +28,11 @@ def get_image(user_id: UUID, db: Session = Depends(get_db)):
 
     return FileResponse(temp_file_path, media_type="image/png", filename="image.png")
 
-@get_avatar_router.put("user/avatar/{user_id}")
-def send_image(user_id: UUID, file: bytes = File(), db: Session = Depends(get_db), authorization: str = Header(...)):
+@get_avatar_router.put("user/avatar")
+def send_image(file: bytes = File(), db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 
     data = jwt.decode(token, os.getenv("RANDOM_SECRET"), algorithms=['HS256'])
-
-    if not data["sub"] == user_id:
-        return JSONResponse(status_code=403, content={"status": "You not this user"})
 
     user_db = db.query(User_table).filter(User_table.user_id == data["sub"]).first()
 
