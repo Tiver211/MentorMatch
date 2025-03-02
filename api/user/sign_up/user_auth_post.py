@@ -15,6 +15,10 @@ user_auth_post_router = APIRouter()
 
 @user_auth_post_router.post("/user/auth/sign-up")
 def post_user(user: User, db: Session = Depends(get_db)):
+    user_db = db.query(User_table).filter(User_table.login == user.login).first
+    if user_db:
+        return JSONResponse(status_code=409, content={"status": "Login already exists"})
+
     hashed_password = bcrypt.hashpw(user.password.encode(), bcrypt.gensalt(rounds=4))
 
     new_user = User_table(
