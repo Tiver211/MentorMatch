@@ -42,7 +42,7 @@ def post_user(user: User, db: Session = Depends(get_db), redis_client: redis.Red
 
     verify_token = secrets.token_urlsafe(32)
 
-    redis_client.set(verify_token, new_user.user_id)
+    redis_client.set(verify_token, str(new_user.user_id))
 
     verify_url = f"https://prod-team-35-lg7sic6v.final.prodcontest.ru/user/verify?token={verify_token}"
     send_email("Верификация почты",
