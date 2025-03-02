@@ -47,3 +47,6 @@ services:
       - "25:25"
       - "587:587"
       - "2525:2525"
+
+volumes:
+  redis_data:
