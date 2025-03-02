@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from answer_offer.answer_offer import answer_offer_router
-from post_offer.post_offer import post_offer_router
+from .answer_offer.answer_offer import answer_offer_router
+from .post_offer.post_offer import post_offer_router
 
 offer_router = APIRouter()
 
