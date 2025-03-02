@@ -4,7 +4,7 @@ from fastapi.openapi.models import Response
 from fastapi.params import Depends, File
 from sqlalchemy.orm import Session
 from sqlalchemy import asc, desc
-from fastapi import APIRouter, Query, Header, UploadFile
+from fastapi import APIRouter, Query, Header, UploadFile, Body
 from typing import Optional
 from starlette.responses import JSONResponse, Response, FileResponse
 from uuid import UUID
@@ -29,7 +29,7 @@ def get_image(user_id: UUID, db: Session = Depends(get_db)):
     return FileResponse(temp_file_path, media_type="image/png", filename="image.png")
 
 @get_avatar_router.put("/user/avatar")
-async def send_image(file: UploadFile = File(...), db: Session = Depends(get_db), authorization: str = Header(...)):
+async def send_image(file: bytes = Body(...), db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 
     data = jwt.decode(token, os.getenv("RANDOM_SECRET"), algorithms=['HS256'])
@@ -39,7 +39,7 @@ async def send_image(file: UploadFile = File(...), db: Session = Depends(get_db)
     if not user_db:
         return JSONResponse(status_code=404, content={"status": "User not found"})
 
-    user_db.avatar = await file.read()
+    user_db.avatar = await file
 
     db.commit()
 
