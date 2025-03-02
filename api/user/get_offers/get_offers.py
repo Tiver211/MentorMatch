@@ -17,7 +17,7 @@ def get_mentors(db: Session = Depends(get_db), authorization: str = Header(...))
 
     data = jwt.decode(token, os.getenv("RANDOM_SECRET"), algorithms=['HS256'])
 
-    offers = db.query(Offer_table).filter(Offer_table.user_id == data["user_id"]).all()
+    offers = db.query(Offer_table).filter(Offer_table.user_id == data["sub"]).all()
 
     result = [
         {
