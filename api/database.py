@@ -4,7 +4,7 @@ import time
 from uuid import UUID, uuid4
 import redis
 import sqlalchemy
-from sqlalchemy import Column, Integer, String, Text, ARRAY, create_engine, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String, Text, create_engine, ForeignKey, Boolean
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy.dialects.postgresql import UUID as UUIDP
 from sqlalchemy.orm import declarative_base, sessionmaker

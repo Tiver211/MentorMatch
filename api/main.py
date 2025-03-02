@@ -32,7 +32,7 @@ def start():
         admin = Admin_table(
             admin_id=uuid4(),
             login="admin",
-            password=hashed_password
+            password=hashed_password.decode()
         )
         db.add(admin)
         db.commit()
