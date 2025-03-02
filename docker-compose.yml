@@ -8,7 +8,7 @@ services:
       REDIS_CONN: "redis:6380"
 
     volumes:
-      - /home/ubuntu/ssl/cert.pem:/api/ssl/cert.pem
+      - /home/ubuntu/ssl/chain.pem:/api/ssl/chain.pem
       - /home/ubuntu/ssl/privkey.pem:/api/ssl/privkey.pem
 
     ports:
