@@ -23,5 +23,15 @@ def post_user(user: User, db: Session = Depends(get_db), authorization: str = He
     user_db.about = user.about if user.about else user_db.about
     db.commit()
 
-    return JSONResponse(status_code=200, content=data)
+    result = \
+        {
+            "user_id": str(user_db.user_id),
+            "first_name": user_db.first_name,
+            "last_name": user_db.last_name,
+            "age": user_db.age,
+            "about": user_db.about,
+            "contact": user_db.contact
+        }
+
+    return JSONResponse(status_code=200, content=result)
 
