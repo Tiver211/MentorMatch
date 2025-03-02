@@ -8,7 +8,7 @@ from starlette.responses import JSONResponse
 
 from ...database import get_db, User_table, Mentor_table, Offer_table, Students_table
 from .base_model import Answer
-from api.SMTP.init_server import send_email
+from api.mail.mail import send_email
 
 from uuid import UUID, uuid4
 
