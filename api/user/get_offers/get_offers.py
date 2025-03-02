@@ -11,13 +11,13 @@ from ...database import get_db, User_table, Mentor_table, Offer_table
 
 get_offers_router = APIRouter()
 
-@get_offers_router.get("user/offers")
+@get_offers_router.get("/user/offers")
 def get_mentors(db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 
     data = jwt.decode(token, os.getenv("RANDOM_SECRET"), algorithms=['HS256'])
 
-    offers = db.query(Offer_table).filter(Offer_table.user_id == data["user_id"]).all()
+    offers = db.query(Offer_table).filter(Offer_table.user_id == data["sub"]).all()
 
     result = [
         {

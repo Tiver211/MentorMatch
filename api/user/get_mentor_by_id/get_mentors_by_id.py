@@ -10,7 +10,7 @@ from ...database import get_db, User_table, Mentor_table
 
 get_mentor_router = APIRouter()
 
-@get_mentor_router.get("mentors/{mentor_id}")
+@get_mentor_router.get("/mentors/{mentor_id}")
 def get_mentor(mentor_id: UUID, db: Session = Depends(get_db)):
     mentor = db.query(Mentor_table).filter(Mentor_table.mentor_id == mentor_id).first()
 

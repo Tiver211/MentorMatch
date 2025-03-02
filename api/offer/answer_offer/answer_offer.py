@@ -14,7 +14,7 @@ from uuid import UUID, uuid4
 
 answer_offer_router = APIRouter()
 
-@answer_offer_router.post("mentors/{mentor_id}/offers/{user_id}")
+@answer_offer_router.post("/mentors/{mentor_id}/offers/{user_id}")
 def answer_offer(answer: Answer, mentor_id: UUID, user_id: UUID, db: Session = Depends(get_db)):
     user = db.query(User_table).filter(User_table.user_id == user_id).first()
 

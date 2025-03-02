@@ -63,7 +63,7 @@ class Mentors_requests_table(Base):
     user_id: UUID = Column(UUIDP(as_uuid=True), ForeignKey('users.user_id', ondelete='CASCADE'), nullable=False)
     about: str = Column(Text, nullable=False)
     direction: str = Column(String, nullable=False)
-    date: datetime.datetime = Column(TIMESTAMP, default=datetime.datetime.now(), nullable=False)
+    date: datetime.datetime = Column(TIMESTAMP, nullable=False)
     status: bool = Column(Boolean, default=False, nullable=False)
 
 class Offer_table(Base):
@@ -74,7 +74,7 @@ class Offer_table(Base):
     user_id: UUID = Column(UUIDP(as_uuid=True), ForeignKey('users.user_id', ondelete='CASCADE'), nullable=False)
     message: str = Column(Text, nullable=True)
     status: bool = Column(Boolean, default=False, nullable=False)
-    date: datetime.datetime = Column(TIMESTAMP, default=datetime.datetime.now(), nullable=False)
+    date: datetime.datetime = Column(TIMESTAMP, nullable=False)
 
 def get_db():
     db = SessionLocal()
