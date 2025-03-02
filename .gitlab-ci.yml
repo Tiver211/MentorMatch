@@ -49,11 +49,11 @@ include:
     - sleep 10
     - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose logs > /tmp/docker-compose.log"
     - scp $SSH_ADDRESS:/tmp/docker-compose.log ./docker-compose.log
+    - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker-compose ps | grep 'healthy'"
+
   artifacts:
     paths:
       - docker-compose.log
-
-
 stages:
   - build
   - deploy
