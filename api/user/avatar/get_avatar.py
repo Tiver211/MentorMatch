@@ -39,7 +39,7 @@ async def send_image(file: bytes = Body(...), db: Session = Depends(get_db), aut
     if not user_db:
         return JSONResponse(status_code=404, content={"status": "User not found"})
 
-    user_db.avatar = await file
+    user_db.avatar = file
 
     db.commit()
 
