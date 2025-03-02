@@ -1,7 +1,9 @@
 import datetime
 import os
+import time
 from uuid import UUID
 import redis
+import sqlalchemy
 from sqlalchemy import Column, Integer, String, Text, ARRAY, create_engine, ForeignKey, Boolean
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy.dialects.postgresql import UUID as UUIDP
@@ -10,9 +12,15 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 Base = declarative_base()
 
 DATABASE_URL = os.getenv("POSTGRES_CONN")
+while True:
+    try:
+        engine = create_engine(DATABASE_URL)
+        SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+        break
 
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    except sqlalchemy.exc.OperationalError:
+        time.sleep(1)
+
 
 class User_table(Base):
     __tablename__ = "users"
