@@ -26,16 +26,4 @@ def verify(db: Session = Depends(get_db), redis_client: redis.Redis = Depends(ge
     user.is_active = True
 
     db.commit()
-
-    data = \
-        {
-            "user_id": str(user.user_id),
-            "login": user.login
-        }
-
-    token_payload = {
-        "sub": data,
-        "exp": datetime.utcnow() + timedelta(days=365)
-    }
-
     return RedirectResponse("https://prod-team-35-lg7sic6v.final.prodcontest.ru/login")
