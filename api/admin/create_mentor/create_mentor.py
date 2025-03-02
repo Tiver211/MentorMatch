@@ -32,6 +32,7 @@ def crete_mentor(mentor: Mentor, user_id: UUID, db: Session = Depends(get_db), a
     if not user:
         return JSONResponse(status_code=404, content={"status": "User not found"})
 
+    user.about = mentor.about
     new_mentor = Mentor_table(mentor_id=uuid4(), user_id=user_id, direction=mentor.direction)
 
     db.add(new_mentor)
