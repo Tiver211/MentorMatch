@@ -8,7 +8,7 @@ from starlette.responses import JSONResponse
 from .base_model import Offer
 from ...database import get_db, User_table, Offer_table, Mentor_table
 
-from api.SMTP.init_server import send_email
+from api.mail.mail import send_email
 
 post_offer_router = APIRouter()
 
