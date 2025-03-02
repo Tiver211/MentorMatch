@@ -1,60 +1,41 @@
-<script lang="ts">
-	let step = $state(0);
-	let isStepValid = $state(false);
-
-	let required: Array<HTMLInputElement> = $state([]);
-	const oninput = () => {
-		for (let i = 0; i < required.length; i++) {
-			required[i].ariaInvalid = 'false';
-		}
-		for (let i = 0; i < required.length; i++) {
-			if (!required[i].value || required[i].value === '') {
-				required[i].ariaInvalid = 'true';
-				isStepValid = false;
-				return;
-			}
-		}
-
-		isStepValid = true;
-	};
-</script>
-
 <h1>Регистрация пользователя</h1>
-{#if step === 0}
+<form action="/signup" method="POST">
+	<h3>Личная информация</h3>
 	<fieldset class="grid">
 		<label for="first-name">
-			Ваше имя*
-			<input type="text" name="first-name" id="first-name" {oninput} bind:this={required[0]} />
+			Имя*
+			<input type="text" name="first-name" id="first-name" required />
 		</label>
 		<label for="last-name">
 			Фамилия
-			<input type="text" name="last-name" id="last-name" {oninput} />
+			<input type="text" name="last-name" id="last-name" />
+		</label>
+		<label for="age">
+			Возраст
+			<input type="number" name="age" id="age" pattern="^(0?[0-9]?[0-9]|1[01][0-9]|120)$" />
 		</label>
 	</fieldset>
-
-	<label for="age">
-		Возраст*
-		<input type="number" min="6" max="192" name="age" id="age" {oninput} bind:this={required[1]} />
+	<label for="about">
+		<h3>Напишите немного информации о себе</h3>
+		<textarea name="about" id="about"></textarea>
 	</label>
-{:else if step === 1}
-	<label for="about"> </label>Напишите немного информации о себе
-	<textarea name="about" id="about"> </textarea>
-{:else}
-	<p>Регистрация окончена</p>
-{/if}
-
-<input
-	disabled={!isStepValid}
-	type="button"
-	value={step < 1 ? 'Продолжить' : 'Создать аккаунт'}
-	onclick={() => {
-		if (step >= 1) {
-			window.location.href = '/mentors';
-			return;
-		}
-		step++;
-	}}
-/>
+	<label for="contact">
+		<h3>Как с вами можно связаться?</h3>
+		<textarea name="contact" id="contact"></textarea>
+	</label>
+	<h3>Данные авторизации</h3>
+	<fieldset class="grid">
+		<label for="email">
+			Электронная почта*
+			<input type="email" name="email" id="email" required />
+		</label>
+		<label for="password">
+			Пароль*
+			<input type="password" name="password" id="password" required />
+		</label>
+	</fieldset>
+	<button type="submit">Завершить регистрацию</button>
+</form>
 
 <style>
 	fieldset {
