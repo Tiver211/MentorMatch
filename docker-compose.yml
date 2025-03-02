@@ -7,6 +7,12 @@ services:
       SMTP_PASSWORD: ${SMTP_PASSWORD}
       REDIS_CONN: "redis:6380"
 
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:433/api/ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
     volumes:
       - /home/ubuntu/ssl/fullchain.pem:/api/ssl/chain.pem
       - /home/ubuntu/ssl/privkey.pem:/api/ssl/privkey.pem
