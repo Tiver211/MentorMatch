@@ -18,7 +18,7 @@
 		<nav>
 			{@render links()}
 		</nav>
-		<a href={loggedIn ? '/profile' : '/signup'} class="auth-btn">
+		<a href={loggedIn ? '/profile' : '/login'} class="auth-btn">
 			<p>{loggedIn ? 'Профиль' : 'Авторизация'}</p>
 		</a>
 	</div>
