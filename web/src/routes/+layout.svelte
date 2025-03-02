@@ -4,7 +4,6 @@
 	let { children } = $props();
 </script>
 
-
 <header>
 	<div class="nav-container">
 		<div class="logo">
@@ -49,8 +48,7 @@
 		align-items: center;
 		margin: 12px 0px;
 		justify-content: center;
-		/* background-color: white; */
-
+		background-color: white;
 	}
 
 	.nav-container {
@@ -65,8 +63,6 @@
 		gap: 32px;
 		text-decoration: none;
 		padding-inline-start: 0px;
-
-
 	}
 
 	/* // button {
@@ -77,10 +73,8 @@
 		margin: 0;
 	}
 
-
 	a {
 		text-decoration: none;
-		color: white;
 		font-size: 16px;
 		font-weight: 400;
 	}
@@ -88,7 +82,6 @@
 	.logo-title {
 		font-size: 16px;
 		font-weight: 600;
-		color: white;
 	}
 
 	footer {
