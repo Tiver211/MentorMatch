@@ -1,20 +1,21 @@
 import os
 import smtplib
 from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
-SMTP_HOST = "mailhog"
-SMTP_PORT = 1025
-SMTP_USER = "noreply"
-SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
+smtp_server = "postfix"
+port = 25
+login = "MFS"
+password = os.getenv("SMTP_PASSWORD")  # Пароль для SMTP
 
-def send_email(target: str, title: str, body: str):
-    msg = MIMEText(body)
-    msg['Subject'] = title
-    msg['From'] = SMTP_USER
-    msg['To'] = target
 
-    with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
-        server.starttls()
-        server.login(SMTP_USER, SMTP_PASSWORD)
-        server.sendmail(SMTP_USER, [target], msg.as_string())
+def send_email(target, subject, content):
+    message = MIMEMultipart("alternative")
+    message["Subject"] = subject
+    message["From"] = "noreply@prod-team-35-lg7sic6v.final.prodcontest.ru"
+    message["To"] = target
+    text = MIMEText(content)
+    message.attach(text)
 
+    with smtplib.SMTP(smtp_server, port) as server:
+        server.sendmail("noreply@prod-team-35-lg7sic6v.final.prodcontest.ru", target, message.as_string())
