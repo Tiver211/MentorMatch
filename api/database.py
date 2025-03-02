@@ -106,4 +106,9 @@ def get_cache():
         redis_client.close()
 
 def init_db():
-    Base.metadata.create_all(bind=engine)
+    while True:
+        try:
+            Base.metadata.create_all(bind=engine)
+            break
+        except sqlalchemy.exc.OperationalError:
+            time.sleep(1)
