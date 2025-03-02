@@ -1,7 +1,13 @@
 <script lang="ts">
 	import '@picocss/pico';
 	import '../app.css';
+	import { browser } from '$app/environment';
 	let { children } = $props();
+
+	let loggedIn: boolean = $state(false);
+	if (browser) {
+		loggedIn = localStorage.getItem('loggedIn') ? true : false;
+	}
 </script>
 
 <header>
@@ -12,8 +18,8 @@
 		<nav>
 			{@render links()}
 		</nav>
-		<a href="/signup" class="auth-btn">
-			<p>Авторизация</p>
+		<a href={loggedIn ? '/profile' : '/signup'} class="auth-btn">
+			<p>{loggedIn ? 'Профиль' : 'Авторизация'}</p>
 		</a>
 	</div>
 </header>
@@ -34,7 +40,6 @@
 		<a href="/" class="active">Главная</a>
 		<a href="/mentors">Наши менторы</a>
 		<a href="/mentors/apply">Стать ментором</a>
-		<a href="/profile">Профиль</a>
 	</ul>
 {/snippet}
 
@@ -52,14 +57,15 @@
 
 	.nav-container {
 		display: flex;
-		gap: 120px;
+		justify-content: center;
+		gap: 4em;
 		align-items: center;
 	}
 
 	ul {
 		display: flex;
 		margin: 4px;
-		gap: 32px;
+		gap: 1em;
 		text-decoration: none;
 		padding-inline-start: 0px;
 	}
