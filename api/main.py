@@ -1,11 +1,10 @@
 import os
-
 import uvicorn
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from starlette.responses import JSONResponse
 from sqlalchemy.orm import Session
 from uuid import uuid4
-from .database import init_db, get_db, Admin_table
+from .database import init_db, Admin_table, SessionLocal
 from .user.user_router import user_router
 from .offer.offer_router import offer_router
 from .admin.admin_router import admin_router
@@ -22,13 +21,20 @@ app.include_router(mentor_router)
 def start():
     init_db()
 
-    admin = Admin_table(admin_id=uuid4(), login="admin",
-                        password=b'$2b$04$JKKcKcM0w0LUdVKm0zKuc.kw0W/heG6N6bt.yWrkPGuCMsrw9MwOK')
+    # Создаем сессию базы данных вручную
+    db: Session = SessionLocal()
 
-    db: Session = Depends(get_db)
-
-    db.add(admin)
-    db.commit()
+    # Проверяем, существует ли уже администратор
+    admin_exists = db.query(Admin_table).filter(Admin_table.login == "admin").first()
+    if not admin_exists:
+        admin = Admin_table(
+            admin_id=uuid4(),
+            login="admin",
+            password=b'$2b$04$JKKcKcM0w0LUdVKm0zKuc.kw0W/heG6N6bt.yWrkPGuCMsrw9MwOK'
+        )
+        db.add(admin)
+        db.commit()
+    db.close()
 
 @app.get("ping")
 def ping():
