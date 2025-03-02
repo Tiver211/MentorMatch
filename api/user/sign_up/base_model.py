@@ -1,6 +1,5 @@
 from typing import Optional
-
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
 
 
 class User(BaseModel):
@@ -11,3 +10,4 @@ class User(BaseModel):
     age: int = Field(ge=0, le=200)
     about: Optional[str] = Field(default=None, min_length=100, max_length=2000)
     contact: str = Field(min_length=4)
+    avatar: Optional[bytes] = Field(default=None)

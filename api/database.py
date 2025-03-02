@@ -4,7 +4,7 @@ import time
 from uuid import UUID, uuid4
 import redis
 import sqlalchemy
-from sqlalchemy import Column, Integer, String, Text, create_engine, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String, Text, create_engine, ForeignKey, Boolean, LargeBinary
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy.dialects.postgresql import UUID as UUIDP
 from sqlalchemy.orm import declarative_base, sessionmaker
@@ -34,6 +34,7 @@ class User_table(Base):
     about: str = Column(Text, nullable=True)
     contact: str = Column(String, nullable=False)
     is_active: bool = Column(Boolean, nullable=False)
+    avatar: bytes = Column(LargeBinary)
 
 class Mentor_table(Base):
     __tablename__ = "mentors"
