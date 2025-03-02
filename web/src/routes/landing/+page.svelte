@@ -45,19 +45,23 @@
 				заявку, после одобрения которой с тобой свяжется выбранный ментор. 
 			</p>
 		<div class="mentor-buttons">
-			<button>Выбрать ментора</button>
-			<button>Стать ментором</button>
+			<button onclick={() => {window.location.href = "/mentors"}}>Выбрать ментора</button>
+			<button onclick={() => {window.location.href = "/mentors/apply"}}>Стать ментором</button>
 		</div>
 		</div>
 	</section>
-
+<!-- 
 	<section class="cta">
 		<a href="/mentors" class="cta-btn">Найти ментора</a>
-	</section>
+	</section> -->
 </main>
 
 <style>
 	.landing-cards {
 		display: flex;
 	}
+
 </style>
+
+
+onclick={() => {window.location.href = "/verification"}}

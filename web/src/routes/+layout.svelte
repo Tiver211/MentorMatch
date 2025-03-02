@@ -49,6 +49,7 @@
 		align-items: center;
 		margin: 12px 0px;
 		justify-content: center;
+		/* background-color: white; */
 
 	}
 
@@ -79,7 +80,7 @@
 
 	a {
 		text-decoration: none;
-		color: black;
+		color: white;
 		font-size: 16px;
 		font-weight: 400;
 	}
@@ -87,6 +88,7 @@
 	.logo-title {
 		font-size: 16px;
 		font-weight: 600;
+		color: white;
 	}
 
 	footer {
