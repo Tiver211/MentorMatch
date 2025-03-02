@@ -39,8 +39,8 @@ services:
       - "25:25"
       - "587:587"
     volumes:
-      - ./haraka/config:/usr/local/haraka/config
-      - ./haraka/logs:/usr/local/haraka/logs
+      - ./haraka/config:/home/ubuntu/haraka/config
+      - ./haraka/logs:/home/ubuntu/haraka/logs
     environment:
       - HARAKA_USER=MFS
       - HARAKA_PASSWORD=${SMTP_PASSWORD}
