@@ -23,14 +23,8 @@ def post_user(user: User, db: Session = Depends(get_db)):
     if not(bcrypt.checkpw(user.password.encode("utf-8"), user_db.password.encode("utf-8"))):
         return JSONResponse(status_code=403, content={"status": "Invalid password"})
 
-    data = \
-        {
-            "user_id": str(user_db.user_id),
-            "login": user_db.login
-        }
-
     token_payload = {
-        "sub": data,
+        "sub": str(user_db.user_id),
         "exp": datetime.utcnow() + timedelta(days=365)
     }
     token = jwt.encode(token_payload, os.getenv("RANDOM_SECRET"), algorithm='HS256')
