@@ -48,7 +48,6 @@
 		align-items: center;
 		margin: 12px 0px;
 		justify-content: center;
-		background-color: white;
 	}
 
 	.nav-container {
