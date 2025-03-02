@@ -33,17 +33,19 @@ services:
       - redis_data:/data
     command: ["redis-server", "--port", "6380"]
 
-  haraka:
-    image: instrumentisto/haraka:latest
+  postfix:
+    image: boky/postfix:latest
+    environment:
+      - maildomain=prod-team-35-lg7sic6v.final.prodcontest.ru:443
+      - smtp_user=MFS:${SMTP_PASSWORD}
+      - relayhost=[connect.smtp.bz]:2525
+      - MYNETWORKS=0.0.0.0/0
+      - ALLOWED_SENDER_DOMAINS=prod-team-35-lg7sic6v.final.prodcontest.ru
     ports:
       - "25:25"
       - "587:587"
-    volumes:
-      - ./haraka/config:/home/ubuntu/haraka/config
-      - ./haraka/logs:/home/ubuntu/haraka/logs
-    environment:
-      - HARAKA_USER=MFS
-      - HARAKA_PASSWORD=${SMTP_PASSWORD}
+      - "443"
+      - "2525:2525"
 
 volumes:
   redis_data:
