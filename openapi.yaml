@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: API for managing users, mentors, offers, and authentication
 servers:
-  - url: 'https://prod-team-35-lg7sic6v.final.prodcontest.ru/'
+  - url: 'https://prod-team-35-lg7sic6v.final.prodcontest.ru/api'
 paths:
   /mentors:
     get:
