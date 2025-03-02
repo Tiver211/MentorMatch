@@ -35,7 +35,7 @@ services:
   postfix:
     image: boky/postfix:latest
     environment:
-      - maildomain=prod-team-35-lg7sic6v.final.prodcontest.ru:4
+      - maildomain=prod-team-35-lg7sic6v.final.prodcontest.ru:443
       - smtp_user=MFS:${SMTP_PASSWORD}
       - relayhost=[connect.smtp.bz]:2525
       - MYNETWORKS=0.0.0.0/0
