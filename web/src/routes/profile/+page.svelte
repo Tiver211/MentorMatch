@@ -3,6 +3,7 @@
 	type="button"
 	value="Выйти из аккаунта"
 	onclick={() => {
+		localStorage.removeItem('isAdmin');
 		localStorage.removeItem('loggedIn');
 		window.location.href = '/';
 	}}
