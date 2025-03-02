@@ -10,7 +10,7 @@ from ...database import get_db, Mentors_requests_table
 
 get_requests_router = APIRouter()
 
-@get_requests_router.get("admin/secreturl/mentor-requests")
+@get_requests_router.get("/admin/secreturl/mentor-requests")
 def get_mentor_requests(
     db: Session = Depends(get_db),
     sort_by: Optional[str] = Query(None),

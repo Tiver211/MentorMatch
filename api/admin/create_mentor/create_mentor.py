@@ -16,7 +16,7 @@ from api.mail.mail import send_email
 
 create_menter_router = APIRouter()
 
-@create_menter_router.post("admin/user/{user_id}/mentor")
+@create_menter_router.post("/admin/user/{user_id}/mentor")
 def crete_mentor(mentor: Mentor, user_id: UUID, db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 
