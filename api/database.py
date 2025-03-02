@@ -32,7 +32,7 @@ class Mentor_table(Base):
 
     mentor_id: UUID = Column(UUIDP(as_uuid=True), primary_key=True)
     user_id: UUID = Column(UUIDP(as_uuid=True), ForeignKey('users.user_id', ondelete='CASCADE'), nullable=False)
-    direction: str = Column(ARRAY(String), nullable=False)
+    direction: str = Column(String, nullable=False)
 
 class Students_table(Base):
     __tablename__ = "students"
@@ -52,8 +52,9 @@ class Mentors_requests_table(Base):
     __tablename__ = "mentorRequests"
 
     request_id: UUID = Column(UUIDP(as_uuid=True), primary_key=True)
+    user_id: UUID = Column(UUIDP(as_uuid=True), ForeignKey('users.user_id', ondelete='CASCADE'), nullable=False)
     about: str = Column(Text, nullable=False)
-    direction: str = Column(ARRAY(String), nullable=False)
+    direction: str = Column(String, nullable=False)
     date: datetime.datetime = Column(TIMESTAMP, default=datetime.datetime.now(), nullable=False)
     status: bool = Column(Boolean, default=False, nullable=False)
 
