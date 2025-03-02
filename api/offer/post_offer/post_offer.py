@@ -28,6 +28,8 @@ def post_offer(offer: Offer, db: Session = Depends(get_db), authorization: str =
     db.add(new_offer)
     db.commit()
 
-    send_email("New offer", f"You have received an offer from {user.contact}", mentor.contact)
+    mentor_contact = db.query(User_table).filter(User_table.user_id == mentor.user_id).first()
+
+    send_email("New offer", f"You have received an offer from {user.contact}", mentor_contact.contact)
 
     return JSONResponse(status_code=200, content={"status": "ok"})
