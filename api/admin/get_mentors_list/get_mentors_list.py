@@ -1,0 +1,66 @@
+from fastapi.params import Depends
+from sqlalchemy.orm import Session
+from sqlalchemy import asc, desc
+from fastapi import APIRouter, Query
+from typing import Optional
+
+from starlette.responses import JSONResponse
+
+from ...database import get_db, User_table, Mentor_table
+
+get_mentors_router = APIRouter()
+
+@get_mentors_router.get("admin/secreturl/mentors")
+def get_mentors(
+    db: Session = Depends(get_db),
+    sort_by: Optional[str] = Query(None),
+    direction: Optional[str] = Query(None),
+    age_from: Optional[int] = Query(0),
+    age_to: Optional[int] = Query(999),
+    order: Optional[str] = Query('asc')
+):
+    query = db.query(Mentor_table).join(User_table).filter(User_table.age <= age_to, User_table.age >= age_from)
+
+    if not direction:
+        if sort_by == "name":
+            if order == 'asc':
+                query = query.order_by(asc(User_table.first_name), asc(User_table.last_name)).filter(User_table.age <= age_to, User_table.age >= age_from)
+            else:
+                query = query.order_by(desc(User_table.first_name), desc(User_table.last_name)).filter(User_table.age <= age_to, User_table.age >= age_from)
+        elif sort_by == "age":
+            if order == 'asc':
+                query = query.order_by(asc(User_table.age)).filter(User_table.age <= age_to, User_table.age >= age_from)
+            else:
+                query = query.order_by(desc(User_table.age)).filter(User_table.age <= age_to, User_table.age >= age_from)
+    else:
+        if sort_by == "name":
+            if order == 'asc':
+                query = query.order_by(asc(User_table.first_name), asc(User_table.last_name)).filter(
+                    User_table.age <= age_to, User_table.age >= age_from, Mentor_table.direction == direction)
+            else:
+                query = query.order_by(desc(User_table.first_name), desc(User_table.last_name)).filter(
+                    User_table.age <= age_to, User_table.age >= age_from, Mentor_table.direction == direction)
+        elif sort_by == "age":
+            if order == 'asc':
+                query = query.order_by(asc(User_table.age)).filter(User_table.age <= age_to, User_table.age >= age_from, Mentor_table.direction == direction)
+            else:
+                query = query.order_by(desc(User_table.age)).filter(User_table.age <= age_to,
+                                                                    User_table.age >= age_from, Mentor_table.direction == direction)
+
+    mentors = query.all()
+
+    result = [
+        {
+            "mentor_id": str(mentor.mentor_id),
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "age": user.age,
+            "direction": mentor.direction,
+            "about": user.about,
+            "contact": user.contact
+        }
+        for mentor in mentors
+        for user in [db.query(User_table).filter(User_table.user_id == mentor.user_id).one()]
+    ]
+
+    return JSONResponse(status_code=200, content=result)
