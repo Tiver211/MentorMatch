@@ -53,6 +53,10 @@ include:
     paths:
       - docker-compose.log
 
+.api_healthcheck:
+  stage: healthcheck
+  script:
+    - ssh $SSH_ADDRESS "cd /path/to/project && docker-compose ps | grep 'healthy'"
 
 stages:
   - build
@@ -61,8 +65,8 @@ stages:
 
 healthcheck:
   stage: healthcheck
-  script:
-    - ssh $SSH_ADDRESS "cd /path/to/project && docker-compose ps | grep 'healthy'"
+  extends:
+    - .api_healthcheck
 
 build:
   stage: build
