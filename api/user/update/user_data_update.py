@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 from api.user.sign_up.base_model import User
-from ...database import get_db, User_table
+from api.database import get_db, User_table
 
 user_update_data_patch = APIRouter()
 
