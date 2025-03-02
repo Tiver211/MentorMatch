@@ -14,9 +14,8 @@
 	});
 </script>
 
-<h1>Регистрация пользователя</h1>
-
 {#if !isVerificationWindowShown}
+	<h1>Регистрация пользователя</h1>
 	<form action="/signup" method="POST">
 		<h3>Личная информация</h3>
 		<fieldset class="grid">
@@ -66,14 +65,6 @@
 			Перейдите по ссылке в письме, отправленной вам на почту, указанную в форме регистрации. Если
 			не можете найти письмо, проверьте папку «Спам».
 		</p>
-		<input
-			type="button"
-			value="Проверить верификацию"
-			onclick={() => {
-				localStorage.setItem('loggedIn', 'true');
-				window.location.href = '/';
-			}}
-		/>
 	</article>
 {/if}
 
