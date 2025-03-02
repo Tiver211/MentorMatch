@@ -2,7 +2,7 @@ from fastapi.params import Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import asc, desc
 from fastapi import APIRouter, Query
-from typing import Optional
+from typing import Optional, List
 
 from starlette.responses import JSONResponse
 
@@ -14,7 +14,7 @@ get_mentors_router = APIRouter()
 def get_mentors(
     db: Session = Depends(get_db),
     sort_by: Optional[str] = Query(None),
-    direction: Optional[str] = Query(None),
+    direction: Optional[List[str]] = Query(None),
     age_from: Optional[int] = Query(0),
     age_to: Optional[int] = Query(999),
     order: Optional[str] = Query('asc')
@@ -36,16 +36,16 @@ def get_mentors(
         if sort_by == "name":
             if order == 'asc':
                 query = query.order_by(asc(User_table.first_name), asc(User_table.last_name)).filter(
-                    User_table.age <= age_to, User_table.age >= age_from, Mentor_table.direction == direction)
+                    User_table.age <= age_to, User_table.age >= age_from, Mentor_table.direction.in_(direction))
             else:
                 query = query.order_by(desc(User_table.first_name), desc(User_table.last_name)).filter(
-                    User_table.age <= age_to, User_table.age >= age_from, Mentor_table.direction == direction)
+                    User_table.age <= age_to, User_table.age >= age_from, Mentor_table.direction.in_(direction))
         elif sort_by == "age":
             if order == 'asc':
-                query = query.order_by(asc(User_table.age)).filter(User_table.age <= age_to, User_table.age >= age_from, Mentor_table.direction == direction)
+                query = query.order_by(asc(User_table.age)).filter(User_table.age <= age_to, User_table.age >= age_from, Mentor_table.direction.in_(direction))
             else:
                 query = query.order_by(desc(User_table.age)).filter(User_table.age <= age_to,
-                                                                    User_table.age >= age_from, Mentor_table.direction == direction)
+                                                                    User_table.age >= age_from, Mentor_table.direction.in_(direction))
 
     mentors = query.all()
 
