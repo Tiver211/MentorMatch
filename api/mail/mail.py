@@ -3,11 +3,8 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-smtp_server = "postfix"
+smtp_server = "haraka"
 port = 25
-login = "MFS"
-password = os.getenv("SMTP_PASSWORD")  # Пароль для SMTP
-
 
 def send_email(target, subject, content):
     message = MIMEMultipart("alternative")
@@ -18,4 +15,5 @@ def send_email(target, subject, content):
     message.attach(text)
 
     with smtplib.SMTP(smtp_server, port) as server:
+        server.login("MFS", os.getenv("SMTP_PASSWORD"))
         server.sendmail("noreply@prod-team-35-lg7sic6v.final.prodcontest.ru", target, message.as_string())
