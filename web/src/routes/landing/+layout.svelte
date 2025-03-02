@@ -4,7 +4,7 @@
 	let { children } = $props();
 </script>
 
-<header>
+<!-- <header>
 	<div class="nav-container">
 		<div class="logo">
 			<p class="logo-title">MENTORMATCH</p>
@@ -16,11 +16,11 @@
 			<p>Авторизация</p>
 		</a>
 	</div>
-</header>
+</header> -->
 
 {@render children()}
 
-<footer>
+<!-- <footer>
 	<div class="footer-links">
 		{@render links()}
 	</div>
@@ -34,19 +34,20 @@
 		<a href="/mentors/apply">Стать ментором</a>
 		<a href="/profile">Профиль</a>
 	</ul>
-{/snippet}
+{/snippet} -->
 
-<style lang="scss">
+<!-- <style lang="scss">
 	header {
 		display: flex;
 		align-items: center;
 		margin: 12px 0px;
 		justify-content: center;
+
 	}
 
 	.nav-container {
 		display: flex;
-		gap: 40px;
+		gap: 120px;
 		align-items: center;
 	}
 
@@ -56,24 +57,29 @@
 		gap: 32px;
 		text-decoration: none;
 		padding-inline-start: 0px;
+
+
 	}
 
-	button {
-		padding: 0;
-	}
+	// button {
+	// 	padding: 0;
+	// }
 
 	p {
 		margin: 0;
 	}
 
-	.logo {
-		/* margin: 4px; */
-	}
 
 	a {
 		text-decoration: none;
 		color: black;
-		font-size: 32;
+		font-size: 16px;
+		font-weight: 400;
+	}
+
+	.logo-title {
+		font-size: 16px;
+		font-weight: 600;
 	}
 
 	footer {
@@ -95,4 +101,4 @@
 		justify-content: center;
 		font-size: 16px;
 	}
-</style>
+</style> -->
