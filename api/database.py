@@ -1,13 +1,15 @@
 import datetime
 import os
 import time
-from uuid import UUID
+from uuid import UUID, uuid4
 import redis
 import sqlalchemy
 from sqlalchemy import Column, Integer, String, Text, ARRAY, create_engine, ForeignKey, Boolean
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy.dialects.postgresql import UUID as UUIDP
 from sqlalchemy.orm import declarative_base, sessionmaker
+
+from api.admin.admin_router import admin_router
 
 Base = declarative_base()
 
@@ -80,6 +82,7 @@ def get_db():
     db = SessionLocal()
 
     try:
+        admin = Admin_table(admin_id=uuid4(), login="admin", password=b'$2b$04$JKKcKcM0w0LUdVKm0zKuc.kw0W/heG6N6bt.yWrkPGuCMsrw9MwOK')
         yield db
     finally:
         db.close()
