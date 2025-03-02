@@ -4,7 +4,11 @@
 			<h1>Найди опытного наставника</h1>
 			<p>и определи своё направление</p>
 		</hgroup>
-		<button>Выбрать ментора</button>
+		<button
+			onclick={() => {
+				window.location.href = '/mentors';
+			}}>Выбрать ментора</button
+		>
 
 		<h2>О нас</h2>
 		<p>
@@ -58,10 +62,6 @@
 		<a href="/mentors" class="cta-btn">Найти ментора</a>
 	</section> -->
 </main>
-
-onclick={() => {
-	window.location.href = '/verification';
-}}
 
 <style>
 	.landing-cards {
