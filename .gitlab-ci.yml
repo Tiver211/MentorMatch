@@ -49,6 +49,7 @@ include:
     - sleep 10
     - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose logs > /tmp/docker-compose.log"
     - scp $SSH_ADDRESS:/tmp/docker-compose.log ./docker-compose.log
+    - curl -f "https://prod-team-35-lg7sic6v.final.prodcontest.ru/api/ping" || exit 1
   artifacts:
     paths:
       - docker-compose.log
