@@ -68,16 +68,6 @@
 		</p>
 		<input
 			type="button"
-			value={resendTimer <= 0
-				? 'Отправить письмо заново'
-				: 'Повторная отправка будет доступна через ' + resendTimer + ' секунд'}
-			disabled={resendTimer > 0}
-			onclick={() => {
-				resendTimer = 60;
-			}}
-		/>
-		<input
-			type="button"
 			value="Проверить верификацию"
 			onclick={() => {
 				localStorage.setItem('loggedIn', 'true');
