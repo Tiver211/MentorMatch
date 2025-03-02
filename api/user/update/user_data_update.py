@@ -20,7 +20,7 @@ def post_user(user: User, db: Session = Depends(get_db), authorization: str = He
 
     user_db.first_name = user.first_name if user.first_name else user_db.first_name
     user_db.last_name = user.last_name if user.last_name else user_db.last_name
-    user_db.age = user.age if user.age else user_db.age
+    user_db.about = user.about if user.about else user_db.about
     db.commit()
 
     return JSONResponse(status_code=200, content=data)
