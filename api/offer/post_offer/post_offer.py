@@ -1,3 +1,4 @@
+import datetime
 import os
 
 import jwt
@@ -21,7 +22,7 @@ def post_offer(offer: Offer, db: Session = Depends(get_db), authorization: str =
     user = db.query(User_table).filter(User_table.user_id == user_data["user_id"])
     mentor = db.query(User_table).join(Mentor_table).filter(User_table.login == offer.mentor_login, User_table.user_id == Mentor_table.user_id).first()
 
-    new_offer = Offer_table(mentor_id=mentor.mentor_id, user_id=user.user_id, message=offer.message)
+    new_offer = Offer_table(mentor_id=mentor.mentor_id, user_id=user.user_id, message=offer.message, date=datetime.datetime.now())
 
     db.add(new_offer)
     db.commit()
