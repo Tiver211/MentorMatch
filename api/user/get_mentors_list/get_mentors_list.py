@@ -36,16 +36,19 @@ def get_mentors(
         if sort_by == "name":
             if order == 'asc':
                 query = query.order_by(asc(User_table.first_name), asc(User_table.last_name)).filter(
-                    User_table.age <= age_to, User_table.age >= age_from, Mentor_table.direction == direction)
+                    User_table.age <= age_to, User_table.age >= age_from, Mentor_table.direction.in_(direction))
             else:
                 query = query.order_by(desc(User_table.first_name), desc(User_table.last_name)).filter(
-                    User_table.age <= age_to, User_table.age >= age_from, Mentor_table.direction == direction)
+                    User_table.age <= age_to, User_table.age >= age_from, Mentor_table.direction.in_(direction))
         elif sort_by == "age":
             if order == 'asc':
-                query = query.order_by(asc(User_table.age)).filter(User_table.age <= age_to, User_table.age >= age_from, Mentor_table.direction == direction)
+                query = query.order_by(asc(User_table.age)).filter(User_table.age <= age_to,
+                                                                   User_table.age >= age_from,
+                                                                   Mentor_table.direction.in_(direction))
             else:
                 query = query.order_by(desc(User_table.age)).filter(User_table.age <= age_to,
-                                                                    User_table.age >= age_from, Mentor_table.direction == direction)
+                                                                    User_table.age >= age_from,
+                                                                    Mentor_table.direction.in_(direction))
 
     mentors = query.all()
 
