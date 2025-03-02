@@ -414,7 +414,12 @@ paths:
           in: query
           required: false
           schema:
-            type: string
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+          description: Filter mentors by their direction(s). Accepts multiple values.
         - name: age_from
           in: query
           required: false
