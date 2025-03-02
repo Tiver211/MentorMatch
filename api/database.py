@@ -76,11 +76,17 @@ def get_db():
         db.close()
 
 def get_cache():
-    redis_client = redis.Redis(*os.getenv("REDIS_CONN").split(":"))
+    redis_conn = os.getenv("REDIS_CONN")
+    host, port = redis_conn.split(":")
+
+    redis_client = redis.Redis(
+        host=host,
+        port=int(port),
+        decode_responses=True
+    )
 
     try:
         return redis_client
-
     finally:
         redis_client.close()
 
