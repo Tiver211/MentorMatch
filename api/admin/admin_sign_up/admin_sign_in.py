@@ -19,7 +19,7 @@ def post_admin(admin: Admin, db: Session = Depends(get_db)):
     if not admin_db:
         return JSONResponse(status_code=404, content={"status": "Admin was not found"})
 
-    if not(bcrypt.checkpw(admin.password.encode(), bytes(admin_db.password, "utf-8"))):
+    if not(bcrypt.checkpw(admin.password.encode("utf-8"), admin_db.password.encode("utf-8"))):
         return JSONResponse(status_code=403, content={"status": "Invalid password"})
 
     token_payload = {
