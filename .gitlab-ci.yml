@@ -57,6 +57,12 @@ include:
 stages:
   - build
   - deploy
+  - healthcheck
+
+healthcheck:
+  stage: healthcheck
+  script:
+    - ssh $SSH_ADDRESS "cd /path/to/project && docker-compose ps | grep 'healthy'"
 
 build:
   stage: build
