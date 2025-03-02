@@ -135,6 +135,8 @@ paths:
                     type: string
                   contact:
                     type: string
+                  avatar:
+                    type: string
         '404':
           description: User not found
           content:
@@ -144,6 +146,81 @@ paths:
                 properties:
                   status:
                     type: string
+
+  /user/avatar/{user_id}:
+    get:
+      summary: Получить аватар пользователя
+      description: Возвращает аватар пользователя в формате PNG по его идентификатору.
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Идентификатор пользователя (UUID)
+      responses:
+        '200':
+          description: Аватар пользователя
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "User not found"
+  /user/avatar:
+    put:
+      summary: Обновить аватар пользователя
+      description: Обновляет аватар текущего пользователя (определяется по JWT токену).
+      requestBody:
+        required: true
+        content:
+          image/png:
+            schema:
+              type: string
+              format: binary
+      security:
+        - BearerAuth: [ ]
+      responses:
+        '200':
+          description: Аватар успешно обновлен
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "OK"
+        '401':
+          description: Неверный или отсутствующий токен
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    example: "Invalid or missing token"
+        '404':
+          description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    example: "User not found"
 
   /user/auth/sign-in:
     post:
