@@ -1,7 +1,6 @@
 import os
 
 import uvicorn
-from django.contrib.sessions.backends.base import SessionBase
 from fastapi import FastAPI, Depends
 from starlette.responses import JSONResponse
 from sqlalchemy.orm import Session
