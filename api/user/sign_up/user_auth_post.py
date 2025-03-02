@@ -11,6 +11,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 from api.user.sign_up.base_model import User
+from ...SMTP.init_server import send_email
 from ...database import get_db, User_table, get_cache
 
 user_auth_post_router = APIRouter()
@@ -42,6 +43,11 @@ def post_user(user: User, db: Session = Depends(get_db), redis_client: redis.Red
     verify_token = secrets.token_urlsafe(32)
 
     redis_client.set(verify_token, user.id)
+
+    verify_url = f"https://prod-team-35-lg7sic6v.final.prodcontest.ru/user/verify?token={verify_token}"
+    send_email("Верификация почты",
+               f"пожалуйста подтвердите вашу почту, для этого перейдите по ссылке: {verify_url}",
+               user.login)
 
     return JSONResponse(status_code=201, content={"status": "ok"})
 

@@ -17,8 +17,8 @@ user_verification = APIRouter(prefix="/user")
 
 
 @user_verification.post("/verify")
-def verify(db: Session = Depends(get_db), redis_client: redis.Redis = Depends(get_cache), q: str = Query(...)):
-    user_id = redis_client.get(q)
+def verify(db: Session = Depends(get_db), redis_client: redis.Redis = Depends(get_cache), token: str = Query(...)):
+    user_id = redis_client.get(token)
     user = db.query(User_table).get(user_id)
     if not user:
         return  JSONResponse(status_code=404, content={"status": "verification request doesn't exists"})
@@ -37,4 +37,7 @@ def verify(db: Session = Depends(get_db), redis_client: redis.Redis = Depends(ge
         "sub": data,
         "exp": datetime.utcnow() + timedelta(days=365)
     }
+
     token = jwt.encode(token_payload, os.getenv("RANDOM_SECRET"), algorithm='HS256')
+
+    return JSONResponse(status_code=200, content={"token": token})
