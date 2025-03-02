@@ -22,7 +22,7 @@ def crete_mentor(mentor: Mentor, user_id: UUID, db: Session = Depends(get_db), a
 
     data = jwt.decode(token, os.getenv("RANDOM_SECRET"), algorithms=['HS256'])
 
-    admin = db.query(Admin_table).filter(Admin_table.admin_id == data["admin_id"]).first()
+    admin = db.query(Admin_table).filter(Admin_table.admin_id == data["sub"]).first()
 
     if not admin:
         return JSONResponse(status_code=403, content={"status": "Admin was not found or you are not admin"})

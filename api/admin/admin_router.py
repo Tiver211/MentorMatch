@@ -7,6 +7,7 @@ from .approve_request.approve_request import approve_router
 from .get_users_list.get_users_list import get_users_router
 from .get_user_by_id.get_user_by_id import get_user_router
 from .get_requests_list.get_requests_list import get_requests_router
+from .create_mentor.create_mentor import create_menter_router
 
 admin_router = APIRouter()
 
@@ -17,3 +18,4 @@ admin_router.include_router(get_mentors_router)
 admin_router.include_router(approve_router)
 admin_router.include_router(get_users_router)
 admin_router.include_router(get_user_router)
+admin_router.include_router(create_menter_router)
