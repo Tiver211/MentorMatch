@@ -281,7 +281,7 @@ paths:
 
   /admin/secreturl/mentors/{mentor_id}:
     get:
-      tags: [Mentors]
+      tags: [Admin]
       summary: Get mentor by ID
       parameters:
         - name: mentor_id
@@ -401,7 +401,7 @@ paths:
 
   /admin/secreturl/mentors:
     get:
-      tags: [Mentors]
+      tags: [Admin]
       summary: Retrieve a list of mentors
       parameters:
         - name: sort_by
