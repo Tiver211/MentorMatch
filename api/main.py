@@ -6,11 +6,13 @@ from fastapi import FastAPI
 from .database import init_db
 from .user.user_router import user_router
 from .offer.offer_router import offer_router
+from .admin.admin_router import admin_router
 
 app = FastAPI()
 
 app.include_router(user_router)
 app.include_router(offer_router)
+app .include_router(admin_router)
 
 @app.on_event("startup")
 def start():
