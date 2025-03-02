@@ -16,7 +16,7 @@ def post_user(user: User, db: Session = Depends(get_db), authorization: str = He
 
     data = jwt.decode(token, os.getenv("RANDOM_SECRET"), algorithms=['HS256'])
 
-    user_db = db.query(User_table).filter(User_table.user_id == data).first()
+    user_db = db.query(User_table).filter(User_table.user_id == data["parameters"]["user_id_1"]["sub"]).first()
 
     user_db.first_name = user.first_name if user.first_name else user_db.first_name
     user_db.last_name = user.last_name if user.last_name else user_db.last_name
