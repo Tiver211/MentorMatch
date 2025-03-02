@@ -46,6 +46,7 @@ include:
         && echo 'SMTP_PASSWORD=$SMTP_PASSWORD' >> .env"
     - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose down || true"
     - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose up -d"
+    - sleep 10
     - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose logs > /tmp/docker-compose.log"
     - scp $SSH_ADDRESS:/tmp/docker-compose.log ./docker-compose.log
   artifacts:
