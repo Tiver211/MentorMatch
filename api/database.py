@@ -9,8 +9,6 @@ from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy.dialects.postgresql import UUID as UUIDP
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-from api.admin.admin_router import admin_router
-
 Base = declarative_base()
 
 DATABASE_URL = os.getenv("POSTGRES_CONN")
