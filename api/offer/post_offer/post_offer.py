@@ -1,5 +1,6 @@
 import datetime
 import os
+from uuid import uuid4
 
 import jwt
 from fastapi import APIRouter, Depends, Header
@@ -22,7 +23,7 @@ def post_offer(offer: Offer, db: Session = Depends(get_db), authorization: str =
     user = db.query(User_table).filter(User_table.user_id == user_data["sub"]).first()
     mentor = db.query(Mentor_table).join(User_table).filter(User_table.login == offer.mentor_login, User_table.user_id == Mentor_table.user_id).first()
 
-    new_offer = Offer_table(mentor_id=mentor.mentor_id, user_id=user.user_id, message=offer.message, date=datetime.datetime.now())
+    new_offer = Offer_table(offer_id=uuid4(), mentor_id=mentor.mentor_id, user_id=user.user_id, message=offer.message, date=datetime.datetime.now())
 
     db.add(new_offer)
     db.commit()
