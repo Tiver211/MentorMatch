@@ -26,6 +26,7 @@ def post_admin(admin: Admin, db: Session = Depends(get_db)):
         "sub": str(admin_db.admin_id),
         "exp": datetime.utcnow() + timedelta(days=365)
     }
+
     token = jwt.encode(token_payload, os.getenv("RANDOM_SECRET"), algorithm='HS256')
 
     return JSONResponse(status_code=200, content={"token": token})
