@@ -38,7 +38,7 @@ def start():
         db.commit()
     db.close()
 
-@app.get("ping")
+@app.get("/ping")
 def ping():
     return JSONResponse(status_code=200, content="PROOOOOOOOOOD")
 
