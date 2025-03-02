@@ -29,7 +29,7 @@ def get_image(user_id: UUID, db: Session = Depends(get_db)):
     return FileResponse(temp_file_path, media_type="image/png", filename="image.png")
 
 @get_avatar_router.put("/user/avatar")
-def send_image(file: UploadFile, db: Session = Depends(get_db), authorization: str = Header(...)):
+async def send_image(file: UploadFile = File(...), db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 
     data = jwt.decode(token, os.getenv("RANDOM_SECRET"), algorithms=['HS256'])
@@ -39,7 +39,7 @@ def send_image(file: UploadFile, db: Session = Depends(get_db), authorization: s
     if not user_db:
         return JSONResponse(status_code=404, content={"status": "User not found"})
 
-    user_db.avatar = file
+    user_db.avatar = await file.read()
 
     db.commit()
 
