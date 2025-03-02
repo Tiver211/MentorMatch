@@ -1,4 +1,6 @@
 import os
+
+import bcrypt
 import uvicorn
 from fastapi import FastAPI
 from starlette.responses import JSONResponse
@@ -21,16 +23,16 @@ app.include_router(mentor_router)
 def start():
     init_db()
 
-    # Создаем сессию базы данных вручную
     db: Session = SessionLocal()
 
-    # Проверяем, существует ли уже администратор
     admin_exists = db.query(Admin_table).filter(Admin_table.login == "admin").first()
     if not admin_exists:
+        hashed_password = bcrypt.hashpw("test".encode(), bcrypt.gensalt(rounds=4))
+
         admin = Admin_table(
             admin_id=uuid4(),
             login="admin",
-            password=b'$2b$04$JKKcKcM0w0LUdVKm0zKuc.kw0W/heG6N6bt.yWrkPGuCMsrw9MwOK'
+            password=hashed_password
         )
         db.add(admin)
         db.commit()
