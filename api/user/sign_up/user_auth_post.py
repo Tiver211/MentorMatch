@@ -33,7 +33,8 @@ def post_user(user: User, db: Session = Depends(get_db), redis_client: redis.Red
         age=user.age,
         about=user.about,
         contact=user.contact,
-        is_active = False
+        is_active = False,
+        avatar=user.avatar
     )
 
     db.add(new_user)
