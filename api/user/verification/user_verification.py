@@ -19,7 +19,7 @@ user_verification = APIRouter(prefix="/user")
 @user_verification.post("/verify")
 def verify(db: Session = Depends(get_db), redis_client: redis.Redis = Depends(get_cache), q: str = Query(...)):
     user_id = redis_client.get(q)
-    user = User.get(user_id)
+    user = User.query.get(user_id)
     if not user:
         return  JSONResponse(status_code=404, content={"status": "verification request doesn't exists"})
 
