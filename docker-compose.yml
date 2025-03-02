@@ -5,6 +5,7 @@ services:
       POSTGRES_CONN: ${POSTGRES_CONN}
       RANDOM_SECRET: ${RANDOM_SECRET}
       SMTP_PASSWORD: ${SMTP_PASSWORD}
+      REDIS_CONN: "redis:6380"
 
     volumes:
       - /home/ubuntu/ssl/cert.pem:/api/ssl/cert.pem
