@@ -27,9 +27,8 @@ services:
 
   redis:
     image: redis:latest
-    container_name: redis_server
     ports:
-      - "6380:6380"
+      - "6380"
     restart: always
     volumes:
       - redis_data:/data
