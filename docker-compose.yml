@@ -12,6 +12,7 @@ services:
       - /home/ubuntu/ssl/privkey.pem:/api/ssl/privkey.pem
 
     ports:
+      - "25"
       - "443:443"
 
   postgres:
