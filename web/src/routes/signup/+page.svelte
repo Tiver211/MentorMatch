@@ -1,10 +1,22 @@
 <script lang="ts">
-	let verificationAwaiting = $state(false);
+	import { watch } from 'runed';
+
+	let isVerificationWindowShown = $state(false);
+	let resendTimer = $state(60);
+
+	watch([() => isVerificationWindowShown], () => {
+		if (isVerificationWindowShown) {
+			window.scrollTo(0, 0);
+			setInterval(() => {
+				resendTimer--;
+			}, 1000);
+		}
+	});
 </script>
 
 <h1>Регистрация пользователя</h1>
 
-{#if !verificationAwaiting}
+{#if !isVerificationWindowShown}
 	<form action="/signup" method="POST">
 		<h3>Личная информация</h3>
 		<fieldset class="grid">
@@ -43,8 +55,7 @@
 		<button
 			type="submit"
 			onclick={() => {
-				verificationAwaiting = true;
-				window.scrollTo(0, 0);
+				isVerificationWindowShown = true;
 			}}>Завершить регистрацию</button
 		>
 	</form>
@@ -55,12 +66,22 @@
 			Перейдите по ссылке в письме, отправленной вам на почту, указанную в форме регистрации. Если
 			не можете найти письмо, проверьте папку «Спам».
 		</p>
-		<input type="button" value="Отправить письмо заново" onclick={() => {}} />
+		<input
+			type="button"
+			value={resendTimer <= 0
+				? 'Отправить письмо заново'
+				: 'Повторная отправка будет доступна через ' + resendTimer + ' секунд'}
+			disabled={resendTimer > 0}
+			onclick={() => {
+				resendTimer = 60;
+			}}
+		/>
 		<input
 			type="button"
 			value="Проверить верификацию"
 			onclick={() => {
 				localStorage.setItem('loggedIn', 'true');
+				window.location.href = '/';
 			}}
 		/>
 	</article>
