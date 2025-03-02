@@ -45,8 +45,8 @@ include:
         && echo 'RANDOM_SECRET=$RANDOM_SECRET' >> .env
         && echo 'SMTP_PASSWORD=$SMTP_PASSWORD' >> .env"
     - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose down || true"
-    - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose up -d"
     - ssh $SSH_ADDRESS "$PRUNE_COMMAND"
+    - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose up -d"
 
 
 stages:
