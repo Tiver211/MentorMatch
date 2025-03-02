@@ -1,7 +1,7 @@
 import datetime
 import os
 from uuid import UUID
-
+import redis
 from sqlalchemy import Column, Integer, String, Text, ARRAY, create_engine, ForeignKey, Boolean
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy.dialects.postgresql import UUID as UUIDP
@@ -25,6 +25,7 @@ class User_table(Base):
     age: int = Column(Integer, nullable=False)
     about: str = Column(Text, nullable=True)
     contact: str = Column(String, nullable=False)
+    is_active: bool = Column(Boolean, nullable=False)
 
 class Mentor_table(Base):
     __tablename__ = "mentors"
@@ -73,6 +74,15 @@ def get_db():
         yield db
     finally:
         db.close()
+
+def get_cache():
+    redis_client = redis.Redis(*os.getenv("REDIS_CONN").split(":"))
+
+    try:
+        return redis_client
+
+    finally:
+        redis_client.close()
 
 def init_db():
     Base.metadata.create_all(bind=engine)
