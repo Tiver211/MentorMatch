@@ -15,7 +15,10 @@
 </script>
 
 {#if !isVerificationWindowShown}
-	<h1>Регистрация пользователя</h1>
+	<hgroup>
+		<h1>Регистрация пользователя</h1>
+		<p>Уже есть аккаунт? <a href="/login">Войдите</a> в него.</p>
+	</hgroup>
 	<form action="/signup" method="POST">
 		<h3>Личная информация</h3>
 		<fieldset class="grid">
