@@ -1,5 +1,5 @@
 <script>
-	import MentorsList from '$lib/people-lists/mentors-list.svelte';
+	import MentorsList from '$lib/components/people-lists/mentors-list.svelte';
 </script>
 
 <h1>Список доступных менторов</h1>
