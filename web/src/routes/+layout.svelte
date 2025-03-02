@@ -5,8 +5,10 @@
 	let { children } = $props();
 
 	let loggedIn: boolean = $state(false);
+	let isAdmin: boolean = $state(false);
 	if (browser) {
 		loggedIn = localStorage.getItem('loggedIn') ? true : false;
+		isAdmin = localStorage.getItem('isAdmin') ? true : false;
 	}
 </script>
 
@@ -37,9 +39,20 @@
 
 {#snippet links()}
 	<ul>
-		<a href="/" class="active">Главная</a>
-		<a href="/mentors">Наши менторы</a>
-		<a href="/mentors/apply">Стать ментором</a>
+		<li>
+			<a href="/" class="active">Главная</a>
+		</li>
+		<li>
+			<a href="/mentors">Наши менторы</a>
+		</li>
+		<li>
+			<a href="/mentors/apply">Стать ментором</a>
+		</li>
+		{#if isAdmin}
+			<li>
+				<a href="/admin">Админ-панель</a>
+			</li>
+		{/if}
 	</ul>
 {/snippet}
 
@@ -68,6 +81,11 @@
 		gap: 1em;
 		text-decoration: none;
 		padding-inline-start: 0px;
+	}
+
+	li {
+		list-style: none;
+		padding: 0;
 	}
 
 	/* // button {
