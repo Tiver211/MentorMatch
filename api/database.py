@@ -82,10 +82,6 @@ def get_db():
     db = SessionLocal()
 
     try:
-        admin = Admin_table(admin_id=uuid4(), login="admin", password=b'$2b$04$JKKcKcM0w0LUdVKm0zKuc.kw0W/heG6N6bt.yWrkPGuCMsrw9MwOK')
-
-        db.add(admin)
-        db.commit()
         yield db
     finally:
         db.close()

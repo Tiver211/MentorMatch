@@ -1,10 +1,12 @@
 import os
 
 import uvicorn
-from fastapi import FastAPI
+from django.contrib.sessions.backends.base import SessionBase
+from fastapi import FastAPI, Depends
 from starlette.responses import JSONResponse
-
-from .database import init_db
+from sqlalchemy.orm import Session
+from uuid import uuid4
+from .database import init_db, get_db, Admin_table
 from .user.user_router import user_router
 from .offer.offer_router import offer_router
 from .admin.admin_router import admin_router
@@ -18,8 +20,14 @@ app.include_router(admin_router)
 app.include_router(mentor_router)
 
 @app.on_event("startup")
-def start():
+def start(db: Session = Depends(get_db)):
     init_db()
+
+    admin = Admin_table(admin_id=uuid4(), login="admin",
+                        password=b'$2b$04$JKKcKcM0w0LUdVKm0zKuc.kw0W/heG6N6bt.yWrkPGuCMsrw9MwOK')
+
+    db.add(admin)
+    db.commit()
 
 @app.get("ping")
 def ping():
