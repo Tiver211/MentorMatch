@@ -1,14 +1,13 @@
-from fastapi.params import Depends, Header
-from sqlalchemy.orm import Session
-from sqlalchemy import asc, desc
-from fastapi import APIRouter, Query
-from typing import Optional
 import os
-import jwt
-from starlette.responses import JSONResponse
 from uuid import UUID
 
-from ...database import get_db, User_table, Mentor_table, Offer_table
+import jwt
+from fastapi import APIRouter
+from fastapi.params import Depends, Header
+from sqlalchemy.orm import Session
+from starlette.responses import JSONResponse
+
+from ...database import get_db, Offer_table
 
 get_offer_by_id_router = APIRouter()
 
