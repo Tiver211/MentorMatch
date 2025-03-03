@@ -5,12 +5,13 @@ from fastapi import APIRouter, Header
 from fastapi.params import Depends
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
+from .Response_model import Response_profile
 
 from ...database import get_db, User_table
 
 get_profile_router = APIRouter()
 
-@get_profile_router.get("/user/profile")
+@get_profile_router.get("/user/profile", status_code=200, response_model=Response_profile)
 def get_users(db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 
@@ -32,4 +33,4 @@ def get_users(db: Session = Depends(get_db), authorization: str = Header(...)):
             "avatar": f"https://prod-team-35-lg7sic6v.final.prodcontest.ru/api/user/avatar/{str(user.user_id)}" if user.avatar is not None else None
         }
 
-    return JSONResponse(status_code=200, content=result)
+    return result

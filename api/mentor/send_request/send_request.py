@@ -6,14 +6,14 @@ import jwt
 from fastapi import APIRouter
 from fastapi.params import Depends, Header
 from sqlalchemy.orm import Session
-from starlette.responses import JSONResponse
 
-from .base_model import Request
+from .models.base_model import Request
+from .models.response_model import Response_request
 from ...database import get_db, Mentors_requests_table
 
 send_request_router = APIRouter()
 
-@send_request_router.post("/mentors/request")
+@send_request_router.post("/mentors/request", status_code=201, response_model=Response_request)
 def send_request(request: Request, db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 
@@ -24,4 +24,14 @@ def send_request(request: Request, db: Session = Depends(get_db), authorization:
     db.add(new_request)
     db.commit()
 
-    return JSONResponse(status_code=201, content={"request_id": f"{new_request.request_id}"})
+    result = \
+        {
+            "request_id": f"{new_request.request_id}",
+            "user_id": f"{new_request.user_id}",
+            "about": new_request.about,
+            "direction": new_request.direction,
+            "date": new_request.date,
+            "status": new_request.status
+        }
+
+    return result

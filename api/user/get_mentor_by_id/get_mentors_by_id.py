@@ -6,10 +6,11 @@ from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 
 from ...database import get_db, User_table, Mentor_table
+from .response_model import Response_mentor
 
 get_mentor_router = APIRouter()
 
-@get_mentor_router.get("/mentors/{mentor_id}")
+@get_mentor_router.get("/mentors/{mentor_id}", status_code=200, response_model=Responce_mentor)
 def get_mentor(mentor_id: UUID, db: Session = Depends(get_db)):
     mentor = db.query(Mentor_table).filter(Mentor_table.mentor_id == mentor_id).first()
 
@@ -31,4 +32,4 @@ def get_mentor(mentor_id: UUID, db: Session = Depends(get_db)):
         }
 
 
-    return JSONResponse(status_code=200, content=result)
+    return result
