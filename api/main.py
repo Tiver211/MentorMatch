@@ -15,12 +15,11 @@ from .mentor.mentor_router import mentor_router
 app = FastAPI(
     openapi_url="/openapi.json",
     docs_url="/docs",
-    redoc_url="/redoc"
 )
-app.include_router(user_router)
-app.include_router(offer_router)
-app.include_router(admin_router)
-app.include_router(mentor_router)
+app.include_router(user_router, prefix="/api")
+app.include_router(offer_router, prefix="/api")
+app.include_router(admin_router, prefix="/api")
+app.include_router(mentor_router, prefix="/api")
 
 @app.on_event("startup")
 def start():
