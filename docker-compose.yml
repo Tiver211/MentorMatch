@@ -20,7 +20,7 @@ services:
 
     ports:
       - "25"
-      - "5173:443"
+      - "443"
   web:
     image: ${IMAGE_NAME_WEB}
     volumes:
@@ -29,7 +29,7 @@ services:
       - /home/ubuntu/ssl/cert.pem:/nginx/ssl/cert.pem
 
     ports:
-      - "443:443"
+      - "5173:443"
      # - "5173:80"
 
   postgres:
