@@ -26,6 +26,7 @@ services:
     volumes:
       - /home/ubuntu/ssl/fullchain.pem:/nginx/ssl/chain.pem
       - /home/ubuntu/ssl/privkey.pem:/nginx/ssl/privkey.pem
+      - /home/ubuntu/ssl/cert.pem:/nginx/ssl/cert.pem
 
     ports:
       - "5173:443"
