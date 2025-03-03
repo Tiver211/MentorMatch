@@ -14,8 +14,20 @@ export const mentorsArraySchema = z.array(mentorSchema);
 
 const baseUrl = 'https://prod-team-35-lg7sic6v.final.prodcontest.ru';
 
-export const get = async (apiUrl: string, schema: z.ZodSchema) => {
-	const url = baseUrl + apiUrl;
+export const get = async (
+	apiUrl: string,
+	schema: z.ZodSchema,
+	pathParam?: string,
+	urlParams?: {
+		key: string;
+		value: string;
+	}[]
+) => {
+	const queryString = urlParams
+		? '?' + urlParams.map((param) => `${param.key}=${param.value}`).join('&')
+		: '';
+	const url = [baseUrl, apiUrl, pathParam ? '/' + pathParam : '', queryString].join('');
+
 	try {
 		const response = await fetch(url);
 		if (!response.ok) {
