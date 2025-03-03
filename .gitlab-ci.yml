@@ -86,7 +86,9 @@ heltchcheck:
   stage: heltchcheck
   extends:
     - .heltchcheck
+    - .global-variables
     - .rules-merge-or-master
+
 
 build:
   stage: build
