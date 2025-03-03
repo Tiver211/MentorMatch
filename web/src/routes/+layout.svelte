@@ -62,16 +62,20 @@
 	}
 
 	header {
+		width: 100%;
+
 		display: flex;
 		align-items: center;
 		margin: 12px 0px;
 		justify-content: center;
+
+		transform: scale(1.2);
 	}
 
 	.nav-container {
+		width: 75%;
 		display: flex;
-		justify-content: center;
-		gap: 4em;
+		justify-content: space-between;
 		align-items: center;
 	}
 
