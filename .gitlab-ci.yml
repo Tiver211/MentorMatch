@@ -75,7 +75,6 @@ build:
     - .build
     - .rules-merge-or-master
 
-
 deploy:
   stage: deploy
   extends:
