@@ -16,8 +16,8 @@ from .mentor.mentor_router import mentor_router
 app = FastAPI(
     openapi_url="/openapi.json",
     docs_url="/docs",
-    redoc_url="/redoc"
 )
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://prod-team-35-lg7sic6v.final.prodcontest.ru", "https://localhost"],  # Разрешить все домены (или укажите конкретные, например ["https://example.com"])
@@ -26,10 +26,11 @@ app.add_middleware(
     allow_headers=["*"],  # Разрешить все заголовки
 )
 
-app.include_router(user_router)
-app.include_router(offer_router)
-app.include_router(admin_router)
-app.include_router(mentor_router)
+app.include_router(user_router, prefix="/api")
+app.include_router(offer_router, prefix="/api")
+app.include_router(admin_router, prefix="/api")
+app.include_router(mentor_router, prefix="/api")
+
 
 @app.on_event("startup")
 def start():
