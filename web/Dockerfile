@@ -1,8 +1,8 @@
 # Stage 1: Build
 FROM oven/bun:latest AS build
 WORKDIR /app
-COPY package.json .
-COPY bun.lock .
+COPY ./package.json .
+COPY ./bun.lock .
 RUN bun install --production --frozen-lockfile
 COPY . .
 RUN bun run build
