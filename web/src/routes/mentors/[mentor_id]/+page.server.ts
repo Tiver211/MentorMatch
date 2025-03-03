@@ -1,6 +1,7 @@
-import { get, mentorSchema } from '$lib/server/database';
+import { get } from '$lib/server/api';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { mentorSchema } from '$lib/schemas';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const mentor = await get('/mentors', mentorSchema, params.mentor_id);

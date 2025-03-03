@@ -1,17 +1,5 @@
 import { z } from 'zod';
 
-export const mentorSchema = z.object({
-	mentor_id: z.string().uuid().optional(),
-	first_name: z.string().optional(),
-	last_name: z.string().optional(),
-	age: z.number().int().min(0).max(125).optional(),
-	direction: z.string().optional(),
-	about: z.string().optional(),
-	contact: z.string().optional()
-});
-
-export const mentorsArraySchema = z.array(mentorSchema);
-
 const baseUrl = 'https://prod-team-35-lg7sic6v.final.prodcontest.ru';
 
 export const get = async (

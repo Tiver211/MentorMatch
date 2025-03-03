@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { mentorSchema } from '$lib/server/database';
+	import type { mentorSchema } from '$lib/schemas.js';
 	import { watch } from 'runed';
 	import type { z } from 'zod';
 
