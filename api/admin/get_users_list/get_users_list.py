@@ -39,7 +39,8 @@ def get_users(
             "last_name": user.last_name,
             "age": user.age,
             "about": user.about,
-            "contact": user.contact
+            "contact": user.contact,
+            "avatar": user.avatar if user.avatar is not None else None
         }
         for user in users
     ]
