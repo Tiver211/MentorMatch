@@ -8,4 +8,4 @@ class Response_offer(BaseModel):
     mentor_id: UUID
     user_id: UUID
     message: str
-    date = datetime.datetime
+    date: datetime.datetime
