@@ -35,8 +35,8 @@ export const get = async (
 
 export const post = async <T>(
 	apiUrl: string,
-	payload: unknown,
-	schema: z.ZodSchema<T>
+	body: object,
+	schema?: z.ZodSchema<T>
 ): Promise<T | undefined> => {
 	const url = baseUrl + apiUrl;
 	try {
@@ -45,7 +45,7 @@ export const post = async <T>(
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(payload)
+			body: JSON.stringify(body)
 		});
 
 		if (!response.ok) {
@@ -53,7 +53,8 @@ export const post = async <T>(
 		}
 
 		const data = await response.json();
-		const dataToReturn = schema.parse(data);
+		let dataToReturn;
+		if (schema) dataToReturn = schema.parse(data);
 
 		return dataToReturn;
 	} catch (error) {
