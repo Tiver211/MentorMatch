@@ -7,6 +7,9 @@ RUN bun install --frozen-lockfile
 COPY . .
 RUN bun run build
 
+# Проверка содержимого директории после сборки
+RUN ls -la /app/build
+
 # Stage 2: Run
 FROM nginx:alpine
 
