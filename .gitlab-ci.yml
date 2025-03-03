@@ -58,8 +58,8 @@ include:
 .heltchcheck:
   stage: heltchcheck
   script:
-    - pass
-    -
+    - echo "Running heltchcheck"
+
 stages:
   - build
   - deploy
@@ -67,8 +67,7 @@ stages:
 
 heltchcheck:
   stage: heltchcheck
-  extends:
-     - .heltchcheck
+  extends: .heltchcheck
 
 build:
   stage: build
