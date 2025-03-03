@@ -1,9 +1,8 @@
-from fastapi.params import Depends
-from sqlalchemy.orm import Session
-from sqlalchemy import asc, desc
-from fastapi import APIRouter, Query
 from uuid import UUID
 
+from fastapi import APIRouter
+from fastapi.params import Depends
+from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 
 from ...database import get_db, User_table, Mentor_table

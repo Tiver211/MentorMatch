@@ -1,17 +1,18 @@
+import os
+from typing import List
+
+import jwt
+from fastapi import APIRouter
 from fastapi.params import Depends, Header
 from sqlalchemy.orm import Session
-from sqlalchemy import asc, desc
-from fastapi import APIRouter, Query
-from typing import Optional
-import os
-import jwt
 from starlette.responses import JSONResponse
+from .response_model import Response_offer
 
-from ...database import get_db, User_table, Mentor_table, Offer_table
+from ...database import get_db, Offer_table
 
 get_offers_router = APIRouter()
 
-@get_offers_router.get("/user/offers")
+@get_offers_router.get("/user/offers", status_code=200, response_model=List[Response_offer])
 def get_mentors(db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 
@@ -30,4 +31,4 @@ def get_mentors(db: Session = Depends(get_db), authorization: str = Header(...))
         for offer in offers
     ]
 
-    return JSONResponse(status_code=200, content=result)
+    return result

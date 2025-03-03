@@ -6,6 +6,54 @@ include:
       - "/jobs/docker.yaml"
       - "/jobs/rules.yaml"
 
+.build_back:
+  image:
+    name: gcr.io/kaniko-project/executor:v1.23.2-debug
+    entrypoint: [""]
+  stage: build
+  variables:
+    DOCKERFILE_PATH: Dockerfile
+    DOCKER_CONFIG: /kaniko/.docker
+    CONTEXT: $CI_PROJECT_DIR
+    IMAGE_TAG: $CI_COMMIT_SHA
+    IMAGE_NAME: $CI_REGISTRY_IMAGE:$IMAGE_TAG
+    REGISTRY_USER: $CI_REGISTRY_USER
+    REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
+    REGISTRY_URL: $CI_REGISTRY
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$REGISTRY_USER\",\"password\":\"$REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+      --context "${CONTEXT}"
+      --dockerfile "${CI_PROJECT_DIR}/${DOCKERFILE_PATH}"
+      --destination "${IMAGE_NAME}"
+      --cache=True
+      --registry-mirror=dockerhub.timeweb.cloud
+
+.build_front:
+  image:
+    name: gcr.io/kaniko-project/executor:v1.23.2-debug
+    entrypoint: [""]
+  stage: build
+  variables:
+    DOCKERFILE_PATH: web/Dockerfile  # Путь к Dockerfile для фронта
+    DOCKER_CONFIG: /kaniko/web/.docker
+    CONTEXT: $CI_PROJECT_DIR/web  # Контекст сборки — папка back/web
+    IMAGE_TAG: $CI_COMMIT_SHA
+    IMAGE_NAME_WEB: ${CI_REGISTRY_IMAGE}/web:$IMAGE_TAG
+    REGISTRY_USER: $CI_REGISTRY_USER
+    REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
+    REGISTRY_URL: $CI_REGISTRY
+  script:
+    - mkdir -p /kaniko/web/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$REGISTRY_USER\",\"password\":\"$REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+      --context "${CONTEXT}"
+      --dockerfile "${CI_PROJECT_DIR}/${DOCKERFILE_PATH}" 
+      --destination "${IMAGE_NAME_WEB}"
+      --cache=True
+      --registry-mirror=dockerhub.timeweb.cloud
+
 .global-variables:
   variables:
     SSH_USER: "ubuntu"
@@ -20,6 +68,7 @@ include:
     DOCKERFILE_PATH: Dockerfile
     IMAGE_TAG: $CI_COMMIT_SHA
     IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    IMAGE_NAME_WEB: ${CI_REGISTRY_IMAGE}/web:$CI_COMMIT_SHA
     DOCKER_HOST: tcp://docker:2376
     DOCKER_TLS_CERTDIR: "/certs"
     DOCKER_TLS_VERIFY: 1
@@ -43,7 +92,8 @@ include:
         && echo 'POSTGRES_PASSWORD=$POSTGRES_PASSWORD' >> .env 
         && echo 'POSTGRES_CONN=$POSTGRES_CONN' >> .env
         && echo 'RANDOM_SECRET=$RANDOM_SECRET' >> .env
-        && echo 'SMTP_PASSWORD=$SMTP_PASSWORD' >> .env"
+        && echo 'SMTP_PASSWORD=$SMTP_PASSWORD' >> .env
+        && echo 'IMAGE_NAME_WEB=$IMAGE_NAME_WEB' >> .env"
     - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose down || true"
     - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose up -d"
     - sleep 10
@@ -89,10 +139,16 @@ heltchcheck:
     - .global-variables
     - .rules-merge-or-master
 
-build:
+build_back:
   stage: build
   extends:
-    - .build
+    - .build_back
+    - .rules-merge-or-master
+      
+build_front:
+  stage: build
+  extends:
+    - .build_front
     - .rules-merge-or-master
 
 deploy:

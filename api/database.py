@@ -1,7 +1,8 @@
 import datetime
 import os
 import time
-from uuid import UUID, uuid4
+from uuid import UUID
+
 import redis
 import sqlalchemy
 from sqlalchemy import Column, Integer, String, Text, create_engine, ForeignKey, Boolean, LargeBinary
