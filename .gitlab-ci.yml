@@ -36,8 +36,8 @@ include:
     entrypoint: [""]
   stage: build
   variables:
-    DOCKERFILE_PATH: web/Dockerfile  # Путь к Dockerfile для фронта
-    DOCKER_CONFIG: /kaniko/.docker
+    DOCKERFILE_PATH: Dockerfile  # Путь к Dockerfile для фронта
+    DOCKER_CONFIG: /kaniko/web/.docker
     CONTEXT: $CI_PROJECT_DIR/web  # Контекст сборки — папка back/web
     IMAGE_TAG: $CI_COMMIT_SHA
     IMAGE_NAME: $CI_REGISTRY_IMAGE/web:$IMAGE_TAG  # Имя образа для фронта
@@ -45,7 +45,7 @@ include:
     REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
     REGISTRY_URL: $CI_REGISTRY
   script:
-    - mkdir -p /kaniko/.docker
+    - mkdir -p /kaniko/web/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$REGISTRY_USER\",\"password\":\"$REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor
       --context "${CONTEXT}"
