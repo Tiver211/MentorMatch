@@ -51,8 +51,15 @@ include:
     - scp $SSH_ADDRESS:/tmp/docker-compose.log ./docker-compose.log
 
   artifacts:
+
     paths:
       - docker-compose.log
+
+.heltchcheck:
+  stage: heltchcheck
+  script:
+    - pass
+    -
 stages:
   - build
   - deploy
@@ -60,8 +67,8 @@ stages:
 
 heltchcheck:
   stage: heltchcheck
-  script:
-    - pass
+  extends:
+     - .heltchcheck
 
 build:
   stage: build
