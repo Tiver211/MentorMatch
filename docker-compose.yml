@@ -8,9 +8,9 @@ services:
       REDIS_CONN: "redis:6380"
 
     healthcheck:
-      test: ["CMD", "curl -f https://prod-team-35-lg7sic6v.final.prodcontest.ru/ping"]
+      test: ["CMD", "apt-get update && apt-get install -y curl && curl -f https://prod-team-35-lg7sic6v.final.prodcontest.ru/ping'"]
       interval: 30s
-      timeout: 10s
+      timeout: 20s
       retries: 3
 
     volumes:
