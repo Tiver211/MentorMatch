@@ -25,7 +25,7 @@ services:
     image: ${IMAGE_NAME_WEB}
     volumes:
       - /home/ubuntu/ssl/fullchain.pem:/nginx/ssl/chain.pem
-      - /home/ubuntu/ssl/privkey.pem:nginx/ssl/privkey.pem
+      - /home/ubuntu/ssl/privkey.pem:/nginx/ssl/privkey.pem
 
     ports:
       - "5173:443"
