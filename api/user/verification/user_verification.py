@@ -1,16 +1,9 @@
-import json
-import os
-from datetime import datetime, timedelta
-
-from fastapi import Query
-
-import jwt
 import redis
-from fastapi import APIRouter, Depends, Header
+from fastapi import APIRouter, Depends
+from fastapi import Query
 from fastapi.responses import JSONResponse, RedirectResponse
 from sqlalchemy.orm import Session
 
-from api.user.sign_up.base_model import User
 from api.database import get_db, User_table, get_cache
 
 user_verification = APIRouter(prefix="/user")

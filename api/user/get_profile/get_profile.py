@@ -1,12 +1,10 @@
 import os
+
 import jwt
+from fastapi import APIRouter, Header
 from fastapi.params import Depends
 from sqlalchemy.orm import Session
-from sqlalchemy import asc, desc
-from fastapi import APIRouter, Query, Header
-from typing import Optional
 from starlette.responses import JSONResponse
-from uuid import UUID
 
 from ...database import get_db, User_table
 

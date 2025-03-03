@@ -1,14 +1,13 @@
 import os
-import jwt
-from fastapi.openapi.models import Response
-from fastapi.params import Depends, File
-from sqlalchemy.orm import Session
-from sqlalchemy import asc, desc
-from fastapi import APIRouter, Query, Header, UploadFile, Body
-from typing import Optional
-from starlette.responses import JSONResponse, Response, FileResponse
-from uuid import UUID
 import tempfile
+from uuid import UUID
+
+import jwt
+from fastapi import APIRouter, Header, Body
+from fastapi.params import Depends
+from sqlalchemy.orm import Session
+from starlette.responses import JSONResponse, FileResponse
+
 from ...database import get_db, User_table
 
 get_avatar_router = APIRouter()
