@@ -27,7 +27,8 @@ def get_mentor(mentor_id: UUID, db: Session = Depends(get_db)):
             "age": user.age,
             "direction": mentor.direction,
             "about": user.about,
-            "contact": user.contact
+            "contact": user.contact,
+            "avatar": user.avatar if user.avatar is not None else None
         }
 
 
