@@ -53,7 +53,7 @@ export const post = async <T>(
 		}
 
 		const data = await response.json();
-		let dataToReturn;
+		let dataToReturn = data;
 		if (schema) dataToReturn = schema.parse(data);
 
 		return dataToReturn;
