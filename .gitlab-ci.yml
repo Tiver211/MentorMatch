@@ -6,6 +6,54 @@ include:
       - "/jobs/docker.yaml"
       - "/jobs/rules.yaml"
 
+.build_back:
+  image:
+    name: gcr.io/kaniko-project/executor:v1.23.2-debug
+    entrypoint: [""]
+  stage: build
+  variables:
+    DOCKERFILE_PATH: Dockerfile
+    DOCKER_CONFIG: /kaniko/.docker
+    CONTEXT: $CI_PROJECT_DIR
+    IMAGE_TAG: $CI_COMMIT_SHA
+    IMAGE_NAME: $CI_REGISTRY_IMAGE:$IMAGE_TAG
+    REGISTRY_USER: $CI_REGISTRY_USER
+    REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
+    REGISTRY_URL: $CI_REGISTRY
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$REGISTRY_USER\",\"password\":\"$REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+      --context "${CONTEXT}"
+      --dockerfile "${CI_PROJECT_DIR}/${DOCKERFILE_PATH}"
+      --destination "${IMAGE_NAME}"
+      --cache=True
+      --registry-mirror=dockerhub.timeweb.cloud
+
+.build_front:
+  image:
+    name: gcr.io/kaniko-project/executor:v1.23.2-debug
+    entrypoint: [""]
+  stage: build
+  variables:
+    DOCKERFILE_PATH: web/Dockerfile
+    DOCKER_CONFIG: /kaniko/.docker
+    CONTEXT: $CI_PROJECT_DIR
+    IMAGE_TAG: $CI_COMMIT_SHA
+    IMAGE_NAME: $CI_REGISTRY_IMAGE:$IMAGE_TAG
+    REGISTRY_USER: $CI_REGISTRY_USER
+    REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
+    REGISTRY_URL: $CI_REGISTRY
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$REGISTRY_USER\",\"password\":\"$REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+      --context "${CONTEXT}"
+      --dockerfile "${CI_PROJECT_DIR}/${DOCKERFILE_PATH}"
+      --destination "${IMAGE_NAME}"
+      --cache=True
+      --registry-mirror=dockerhub.timeweb.cloud
+
 .global-variables:
   variables:
     SSH_USER: "ubuntu"
@@ -92,7 +140,8 @@ heltchcheck:
 build:
   stage: build
   extends:
-    - .build
+    - .build_back
+    - .build_front
     - .rules-merge-or-master
 
 deploy:
