@@ -7,12 +7,13 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
-from api.user.sign_up.base_model import User
+from .models.base_model import User
+from .models.response_model import Response_verify_url
 from ...database import get_db, User_table, get_cache
 
 user_auth_post_router = APIRouter()
 
-@user_auth_post_router.post("/user/auth/sign-up")
+@user_auth_post_router.post("/user/auth/sign-up", status_code=201, response_model=Response_verify_url)
 def post_user(user: User, db: Session = Depends(get_db), redis_client: redis.Redis = Depends(get_cache)):
     user_db = db.query(User_table).filter(User_table.login == user.login).first()
     if user_db:
@@ -46,5 +47,5 @@ def post_user(user: User, db: Session = Depends(get_db), redis_client: redis.Red
     #           "Верификация почты",
     #           f"пожалуйста подтвердите вашу почту, для этого перейдите по ссылке: {verify_url}",)
 
-    return JSONResponse(status_code=201, content={"status": "ok", "verify_email": verify_url})
+    return {"verify_url": verify_url}
 

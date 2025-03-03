@@ -8,11 +8,12 @@ from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 
 from ...database import get_db, User_table, Mentor_table, Students_table
+from .response_model import Response_student
 
 get_student_router = APIRouter()
 
 
-@get_student_router.get("/mentors/students/{user_id}")
+@get_student_router.get("/mentors/students/{user_id}", status_code=200, response_model=Response_student)
 def get_mentor_students(user_id: UUID, db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
     data = jwt.decode(token, os.getenv("RANDOM_SECRET"), algorithms=['HS256'])
@@ -41,4 +42,4 @@ def get_mentor_students(user_id: UUID, db: Session = Depends(get_db), authorizat
             "avatar": f"https://prod-team-35-lg7sic6v.final.prodcontest.ru/api/user/avatar/{str(student.user_id)}" if student.avatar is not None else None
         }
 
-    return JSONResponse(status_code=200, content=result)
+    return result

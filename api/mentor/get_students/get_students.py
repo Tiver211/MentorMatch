@@ -7,13 +7,15 @@ from fastapi.params import Depends
 from sqlalchemy import asc, desc
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
+from typing import List
 
 from ...database import get_db, User_table, Mentor_table, Students_table
+from .response_model import Response_student
 
 get_students_router = APIRouter()
 
 
-@get_students_router.get("/mentors/students")
+@get_students_router.get("/mentors/students", status_code=200, response_model=List[Response_student])
 def get_mentor_students(
         db: Session = Depends(get_db),
         sort_by: Optional[str] = Query(None),
@@ -66,4 +68,4 @@ def get_mentor_students(
         for student in students
     ]
 
-    return JSONResponse(status_code=200, content=result)
+    return result

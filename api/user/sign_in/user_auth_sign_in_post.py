@@ -8,11 +8,12 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 from api.database import get_db, User_table
-from api.user.sign_in.base_model import User
+from .models.base_model import User
+from .models.response_model import Response_user_token
 
 user_auth_sign_in_router = APIRouter()
 
-@user_auth_sign_in_router.post("/user/auth/sign-in")
+@user_auth_sign_in_router.post("/user/auth/sign-in", status_code=200, response_model=Response_user_token)
 def post_user(user: User, db: Session = Depends(get_db)):
     user_db = db.query(User_table).filter_by(login=user.login, is_active=True).first()
 
@@ -28,5 +29,5 @@ def post_user(user: User, db: Session = Depends(get_db)):
     }
     token = jwt.encode(token_payload, os.getenv("RANDOM_SECRET"), algorithm='HS256')
 
-    return JSONResponse(status_code=200, content={"token": token})
+    return {"token": token}
 
