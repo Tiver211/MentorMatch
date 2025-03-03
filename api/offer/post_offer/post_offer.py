@@ -10,8 +10,6 @@ from starlette.responses import JSONResponse
 from .base_model import Offer
 from ...database import get_db, User_table, Offer_table, Mentor_table
 
-from api.mail.mail import send_email
-
 post_offer_router = APIRouter()
 
 @post_offer_router.post("/mentors/offer")
@@ -32,4 +30,4 @@ def post_offer(offer: Offer, db: Session = Depends(get_db), authorization: str =
 
     # send_email("New offer", f"You have received an offer from {user.contact}", mentor_contact.contact)
 
-    return JSONResponse(status_code=200, content={"status": "ok"})
+    return JSONResponse(status_code=200, content={"offer_id": f"{new_offer.offer_id}"})

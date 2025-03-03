@@ -1,16 +1,11 @@
-import os
-import random
+from uuid import UUID, uuid4
 
-import jwt
-from fastapi import APIRouter, Depends, Header
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 
-from ...database import get_db, User_table, Mentor_table, Offer_table, Students_table
 from .base_model import Answer
-from api.mail.mail import send_email
-
-from uuid import UUID, uuid4
+from ...database import get_db, User_table, Mentor_table, Offer_table, Students_table
 
 answer_offer_router = APIRouter()
 
@@ -31,8 +26,14 @@ def answer_offer(answer: Answer, mentor_id: UUID, user_id: UUID, db: Session = D
 
         new_student = Students_table(id=uuid4(), mentor_id=mentor_id, user_id=user_id)
 
+        offer = db.query(Offer_table).filter(Offer_table.offer_id == answer.offer_id).first()
+
+        offer.status = True
+
         db.add(new_student)
         db.commit()
+
+        return JSONResponse(status_code=200, content={"student_id": f"{new_student.id}"})
 
     else:
         # send_email("Your offer was not accepted", f"Sorry but mentor does not accepted your offer", user.contact)
@@ -42,4 +43,4 @@ def answer_offer(answer: Answer, mentor_id: UUID, user_id: UUID, db: Session = D
 
         db.commit()
 
-    return JSONResponse(status_code=200, content={"status": "ok"})
+        return JSONResponse(status_code=200, content={"status": "ok"})

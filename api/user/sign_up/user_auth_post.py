@@ -1,17 +1,13 @@
-import os
 import secrets
-from datetime import datetime, timedelta
 from uuid import uuid4
 
 import bcrypt
-import jwt
 import redis
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 from api.user.sign_up.base_model import User
-from api.mail.mail import send_email
 from ...database import get_db, User_table, get_cache
 
 user_auth_post_router = APIRouter()
