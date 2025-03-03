@@ -29,8 +29,8 @@ services:
       - /home/ubuntu/ssl/cert.pem:/nginx/ssl/cert.pem
 
     ports:
-#      - "5173:443"
-      - "5173:80"
+      - "5173:443"
+     # - "5173:80"
 
   postgres:
     image: postgres:15
