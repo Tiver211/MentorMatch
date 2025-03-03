@@ -20,10 +20,10 @@ app = FastAPI(
 )
 
 allowed_origins = [
-    "https://prod-team-35-lg7sic6v.final.prodcontest.ru",  # Ваш продакшен-домен
-    "http://localhost:5173",  # Svelte (по умолчанию порт 5173)
+    "https://prod-team-35-lg7sic6v.final.prodcontest.ru",
+    "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "*"# Альтернативный адрес для localhost
+    "*"
 ]
 
 app.add_middleware(
