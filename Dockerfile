@@ -5,7 +5,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
-RUN apk --update --no-cache add curl
+RUN sudo apt install curl
 
 COPY . /app
 
