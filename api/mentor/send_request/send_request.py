@@ -1,17 +1,15 @@
 import datetime
+import os
+from uuid import uuid4
 
+import jwt
+from fastapi import APIRouter
 from fastapi.params import Depends, Header
 from sqlalchemy.orm import Session
-from sqlalchemy import asc, desc
-from fastapi import APIRouter, Query
-from typing import Optional
-import os
-import jwt
 from starlette.responses import JSONResponse
-from uuid import UUID, uuid4
 
 from .base_model import Request
-from ...database import get_db, User_table, Mentors_requests_table
+from ...database import get_db, Mentors_requests_table
 
 send_request_router = APIRouter()
 

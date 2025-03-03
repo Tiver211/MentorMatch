@@ -1,17 +1,18 @@
 import os
+from uuid import uuid4
 
 import bcrypt
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from starlette.responses import JSONResponse
 from sqlalchemy.orm import Session
-from uuid import uuid4
-from .database import init_db, Admin_table, SessionLocal
-from .user.user_router import user_router
-from .offer.offer_router import offer_router
+from starlette.responses import JSONResponse
+
 from .admin.admin_router import admin_router
+from .database import init_db, Admin_table, SessionLocal
 from .mentor.mentor_router import mentor_router
+from .offer.offer_router import offer_router
+from .user.user_router import user_router
 
 app = FastAPI(
     openapi_url="/openapi.json",

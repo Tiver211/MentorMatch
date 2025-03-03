@@ -1,14 +1,12 @@
-from ...database import get_db, Mentors_requests_table, Mentor_table, User_table
-from .base_model import Approve
+from uuid import UUID, uuid4
+
+from fastapi import APIRouter
 from fastapi.params import Depends
 from sqlalchemy.orm import Session
-from sqlalchemy import asc, desc
-from fastapi import APIRouter, Query
-from typing import Optional
 from starlette.responses import JSONResponse
-import datetime
-from uuid import UUID, uuid4
-from api.mail.mail import send_email
+
+from .base_model import Approve
+from ...database import get_db, Mentors_requests_table, Mentor_table, User_table
 
 approve_router = APIRouter()
 
