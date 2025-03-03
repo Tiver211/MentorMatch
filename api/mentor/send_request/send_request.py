@@ -26,4 +26,4 @@ def send_request(request: Request, db: Session = Depends(get_db), authorization:
     db.add(new_request)
     db.commit()
 
-    return JSONResponse(status_code=201, content={"status": "Request was sent"})
+    return JSONResponse(status_code=201, content={"request_id": f"{new_request.request_id}"})
