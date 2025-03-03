@@ -10,7 +10,7 @@ from .response_model import Response_mentor
 
 get_mentor_router = APIRouter()
 
-@get_mentor_router.get("/mentors/{mentor_id}", status_code=200, response_model=Responce_mentor)
+@get_mentor_router.get("/mentors/{mentor_id}", status_code=200, response_model=Response_mentor)
 def get_mentor(mentor_id: UUID, db: Session = Depends(get_db)):
     mentor = db.query(Mentor_table).filter(Mentor_table.mentor_id == mentor_id).first()
 
