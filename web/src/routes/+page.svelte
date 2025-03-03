@@ -1,14 +1,16 @@
 <main>
 	<section class="hero">
-		<hgroup>
-			<h1>Найди опытного наставника</h1>
-			<p>и определи своё направление</p>
-		</hgroup>
-		<button
-			onclick={() => {
-				window.location.href = '/mentors';
-			}}>Выбрать ментора</button
-		>
+		<div class="row">
+			<hgroup>
+				<h1>Найди опытного наставника</h1>
+				<p>и определи своё направление</p>
+			</hgroup>
+			<button
+				onclick={() => {
+					window.location.href = '/mentors';
+				}}>Выбрать ментора</button
+			>
+		</div>
 
 		<h2>О нас</h2>
 		<p>
@@ -66,5 +68,11 @@
 <style>
 	.landing-cards {
 		display: flex;
+	}
+
+	.row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 	}
 </style>
