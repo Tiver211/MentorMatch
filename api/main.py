@@ -13,9 +13,9 @@ from .admin.admin_router import admin_router
 from .mentor.mentor_router import mentor_router
 
 app = FastAPI(
-    openapi_url="/api/openapi.json",
-    docs_url="/api/docs",
-    redoc_url="/api/redoc",
+    openapi_url="/openapi.json",
+    docs_url="/docs",
+    redoc_url="/redoc"
 )
 app.include_router(user_router)
 app.include_router(offer_router)
