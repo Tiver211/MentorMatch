@@ -22,23 +22,34 @@
 	});
 </script>
 
-<h1>Список доступных менторов</h1>
-<label for="age">
-	Возраст от
-	<input type="number" name="age" id="age" bind:value={ageThreshold} />
-</label>
+{#if mentors && mentors.length !== 0}
+	<h1>Список доступных менторов</h1>
+	<label for="age">
+		Возраст от
+		<input type="number" name="age" id="age" bind:value={ageThreshold} />
+	</label>
+{:else}
+	<h1>На данный момент отсутствуют доступные менторы</h1>
+{/if}
 <pre>{JSON.stringify(data)}</pre>
 
 <ul>
 	{#each mentorsFiltered as mentor}
 		<li>
-			<div>
-				<b>{mentor.first_name} {mentor.last_name}</b>
-				<p>{mentor.age} лет</p>
-				<p>
-					<b>О себе:</b> <br />
-					{mentor.about}
-				</p>
+			<div class="row">
+				<div>
+					<b>{mentor.first_name} {mentor.last_name}</b>
+					<p>{mentor.age} лет</p>
+					<p>
+						<b>О себе:</b> <br />
+						{mentor.about}
+					</p>
+				</div>
+				<button
+					onclick={() => {
+						window.location.href = '/mentors/' + mentor.mentor_id;
+					}}>Открыть профиль</button
+				>
 			</div>
 		</li>
 	{/each}
@@ -60,5 +71,11 @@
 
 	p {
 		margin-bottom: 0.1em;
+	}
+
+	.row {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
 	}
 </style>
