@@ -17,6 +17,8 @@
 	let otherErrorWarning: HTMLParagraphElement | undefined = $state();
 	let isVerificationWindowShown = $state(false);
 
+	let emailVerificationLink: string = $state('');
+
 	let promise: any = $state();
 	const sendForm = (event: Event) => {
 		event.preventDefault();
@@ -29,20 +31,20 @@
 			}
 		}).then(async (response) => {
 			if (!response.ok) {
-				console.log(
-					response.json().then((value) => {
-						value.details.msg;
-					})
-				);
-
 				const responseJson = await response.json();
 
 				if (response.status === 422 && validationErrorWarning) {
-					validationErrorWarning.textContent = 'Данные некорректны: ' + responseJson.details.msg;
+					validationErrorWarning.textContent =
+						'Данные некорректны: ' +
+						responseJson.detail[0].msg +
+						`. Location: (${responseJson.detail[0].loc[1]})`;
 					validationErrorWarning.hidden = false;
 				}
 				throw new Error('');
 			}
+			emailVerificationLink = (await response.json()).verify_url;
+			console.log(emailVerificationLink);
+
 			isVerificationWindowShown = true;
 		});
 	};
@@ -67,11 +69,11 @@
 				/>
 			</label>
 			<label for="last-name">
-				Фамилия
+				Фамилия*
 				<input type="text" name="last-name" id="last-name" bind:value={user.last_name} />
 			</label>
 			<label for="age">
-				Возраст
+				Возраст*
 				<input
 					type="number"
 					name="age"
@@ -86,14 +88,14 @@
 			<textarea name="about" id="about" bind:value={user.about}></textarea>
 		</label>
 		<label for="contact">
-			<h3>Как с вами можно связаться?</h3>
-			<textarea name="contact" id="contact" bind:value={user.contact}></textarea>
+			<h3>Электронная почта*</h3>
+			<input type="email" name="contact" id="contact" bind:value={user.contact} />
 		</label>
 		<h3>Данные авторизации</h3>
 		<fieldset class="grid">
-			<label for="email">
-				Электронная почта*
-				<input type="email" name="email" id="email" bind:value={user.login} required />
+			<label for="login">
+				Логин*
+				<input type="text" name="login" id="login" bind:value={user.login} required />
 			</label>
 			<label for="password">
 				Пароль*
@@ -124,12 +126,27 @@
 			Перейдите по ссылке в письме, отправленной вам на почту, указанную в форме регистрации. Если
 			не можете найти письмо, проверьте папку «Спам».
 		</p>
-		<button type="button" onclick={() => {}}>Подтвердить почту</button>
+		<button
+			type="button"
+			onclick={() => {
+				window.location.href = emailVerificationLink;
+			}}
+		>
+			Подтвердить почту
+		</button>
 	</article>
 {/if}
 
 <style>
 	fieldset {
 		margin-bottom: 0;
+	}
+
+	#validation-error-warning {
+		padding: 0.5em;
+		padding-left: 1em;
+		background-color: sandybrown;
+		color: black;
+		border-radius: 0.25em;
 	}
 </style>
