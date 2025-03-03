@@ -62,7 +62,7 @@ heltchcheck:
   stage: heltchcheck
   script:
     - pass
-    -
+
 build:
   stage: build
   extends:
