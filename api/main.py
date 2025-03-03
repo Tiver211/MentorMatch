@@ -50,9 +50,9 @@ def start():
         db.commit()
     db.close()
 
-#@app.get("/ping")
-#def ping():
-#    return JSONResponse(status_code=200, content="PROOOOOOOOOOD")
+@app.get("/ping")
+def ping():
+    return JSONResponse(status_code=200, content="PROOOOOOOOOOD")
 
 if __name__ == "__main__":
     server_address = os.getenv("SERVER_ADDRESS", "0.0.0.0:443")
