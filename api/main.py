@@ -12,7 +12,7 @@ from .offer.offer_router import offer_router
 from .admin.admin_router import admin_router
 from .mentor.mentor_router import mentor_router
 
-app = FastAPI(openapi_prefix="/api")
+app = FastAPI()
 
 app.include_router(user_router)
 app.include_router(offer_router)

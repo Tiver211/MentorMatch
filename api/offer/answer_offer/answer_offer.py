@@ -27,7 +27,7 @@ def answer_offer(answer: Answer, mentor_id: UUID, user_id: UUID, db: Session = D
         return JSONResponse(status_code=404, content={"status": "Mentor not found"})
 
     if answer.status:
-        send_email("Your offer was accepted", f"Contact of mentor {mentor.contact}", user.contact)
+        # send_email("Your offer was accepted", f"Contact of mentor {mentor.contact}", user.contact)
 
         new_student = Students_table(id=uuid4(), mentor_id=mentor_id, user_id=user_id)
 
@@ -35,7 +35,7 @@ def answer_offer(answer: Answer, mentor_id: UUID, user_id: UUID, db: Session = D
         db.commit()
 
     else:
-        send_email("Your offer was not accepted", f"Sorry but mentor does not accepted your offer", user.contact)
+        # send_email("Your offer was not accepted", f"Sorry but mentor does not accepted your offer", user.contact)
         offer = db.query(Offer_table).filter(Offer_table.offer_id == answer.offer_id).first()
 
         offer.status = False
