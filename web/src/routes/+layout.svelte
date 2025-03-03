@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '@picocss/pico';
+	import '../pico.indigo.min.css';
 	import '../app.css';
 	import { browser } from '$app/environment';
 	let { children } = $props();
