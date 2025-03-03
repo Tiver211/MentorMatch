@@ -45,9 +45,11 @@
 		<li>
 			<a href="/mentors">Наши менторы</a>
 		</li>
-		<li>
-			<a href="/mentors/apply">Стать ментором</a>
-		</li>
+		{#if loggedIn}
+			<li>
+				<a href="/mentors/apply">Стать ментором</a>
+			</li>
+		{/if}
 		{#if isAdmin}
 			<li>
 				<a href="/admin">Админ-панель</a>
