@@ -58,7 +58,7 @@ def get_mentors(
             "direction": mentor.direction,
             "about": user.about,
             "contact": user.contact,
-            "avatar": user.avatar if user.avatar is not None else None
+            "avatar": f"https://prod-team-35-lg7sic6v.final.prodcontest.ru/user/avatar/{str(user.user_id)}" if user.avatar is not None else None
         }
         for mentor in mentors
         for user in [db.query(User_table).filter(User_table.user_id == mentor.user_id).one()]
