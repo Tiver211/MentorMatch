@@ -4,12 +4,13 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 
-from .base_model import Answer
+from .models.base_model import Answer
+from .models.response_model import Response_offer
 from ...database import get_db, User_table, Mentor_table, Offer_table, Students_table
 
 answer_offer_router = APIRouter()
 
-@answer_offer_router.post("/mentors/{mentor_id}/offers/{user_id}")
+@answer_offer_router.post("/mentors/{mentor_id}/offers/{user_id}", status_code=200, response_model=Response_offer)
 def answer_offer(answer: Answer, mentor_id: UUID, user_id: UUID, db: Session = Depends(get_db)):
     user = db.query(User_table).filter(User_table.user_id == user_id).first()
 
@@ -33,7 +34,16 @@ def answer_offer(answer: Answer, mentor_id: UUID, user_id: UUID, db: Session = D
         db.add(new_student)
         db.commit()
 
-        return JSONResponse(status_code=200, content={"student_id": f"{new_student.id}"})
+        result = \
+            {
+                "offer_id": f"{offer.offer_id}",
+                "mentor_id": f"{offer.mentor_id}",
+                "user_id": f"{offer.user_id}",
+                "message": f"{offer.message}",
+                "date": offer.date
+            }
+
+        return result
 
     else:
         # send_email("Your offer was not accepted", f"Sorry but mentor does not accepted your offer", user.contact)
@@ -43,4 +53,4 @@ def answer_offer(answer: Answer, mentor_id: UUID, user_id: UUID, db: Session = D
 
         db.commit()
 
-        return JSONResponse(status_code=200, content={"status": "ok"})
+        return JSONResponse(status_code=200, content={"status": "Mentor does not accepted offer"})
