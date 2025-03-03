@@ -12,6 +12,7 @@
 		login: '',
 		password: ''
 	};
+	let token: string = '';
 
 	let invalidCredentialsWarning: HTMLParagraphElement | undefined;
 
@@ -26,12 +27,15 @@
 			headers: {
 				'Content-type': 'application/json; charset=UTF-8'
 			}
-		}).then((response) => {
+		}).then(async (response) => {
 			if (!response.ok) {
-				if (response.status === 422 && invalidCredentialsWarning) {
+				if (response.status === 404 && invalidCredentialsWarning) {
 					invalidCredentialsWarning.hidden = false;
 				}
 			}
+			console.log(await response.json());
+
+			token = await response.json();
 		});
 	};
 </script>
@@ -41,16 +45,16 @@
 	<p>Нет аккаунта? <a href="/signup">Зарегистрируйтесь</a>.</p>
 </hgroup>
 <form method="POST" {onsubmit}>
-	<label for="email">
-		Электронная почта
-		<input type="email" name="email" id="email" />
+	<label for="login">
+		Логин
+		<input type="text" name="login" id="login" />
 	</label>
 	<label for="password">
 		Пароль
 		<input type="password" name="password" id="password" />
 	</label>
 	<p id="invalid-credentials" bind:this={invalidCredentialsWarning} hidden>
-		Неверная электронная почта или пароль
+		Неверный логин или пароль
 	</p>
 	<button type="submit">Войти в аккаунт</button>
 </form>
