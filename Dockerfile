@@ -6,7 +6,7 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 RUN apt-get update
-RUN apt-get install curl
+RUN apt-get -y install curl
 
 COPY . /app
 
