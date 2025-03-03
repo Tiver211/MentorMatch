@@ -59,7 +59,7 @@ include:
   stage: heltchcheck
   extends: .ssh
   script:
-    - ssh $SSH_ADDRES "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose ps"
+    - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose ps"
   variables:
     OPT_DOCKER: ""
     DOCKERFILE_PATH: Dockerfile
