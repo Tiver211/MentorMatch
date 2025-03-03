@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 from uuid import UUID
 
 class Response_profile(BaseModel):
@@ -6,6 +7,6 @@ class Response_profile(BaseModel):
     first_name: str
     last_name: str
     age: int
-    about: str
+    about: Optional[str]
     contact: str
-    avatar: str
+    avatar: Optional[str]
