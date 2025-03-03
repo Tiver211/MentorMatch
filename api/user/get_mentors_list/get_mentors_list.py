@@ -15,7 +15,7 @@ get_mentors_router = APIRouter()
 def get_mentors(
     db: Session = Depends(get_db),
     sort_by: Optional[str] = Query(None),
-    direction: Optional[str] = Query(None),
+    direction: Optional[List[str]] = Query(None),
     age_from: Optional[int] = Query(0),
     age_to: Optional[int] = Query(999),
     order: Optional[str] = Query('asc')
@@ -25,14 +25,17 @@ def get_mentors(
     if not direction:
         if sort_by == "name":
             if order == 'asc':
-                query = query.order_by(asc(User_table.first_name), asc(User_table.last_name)).filter(User_table.age <= age_to, User_table.age >= age_from)
+                query = query.order_by(asc(User_table.first_name), asc(User_table.last_name)).filter(
+                    User_table.age <= age_to, User_table.age >= age_from)
             else:
-                query = query.order_by(desc(User_table.first_name), desc(User_table.last_name)).filter(User_table.age <= age_to, User_table.age >= age_from)
+                query = query.order_by(desc(User_table.first_name), desc(User_table.last_name)).filter(
+                    User_table.age <= age_to, User_table.age >= age_from)
         elif sort_by == "age":
             if order == 'asc':
                 query = query.order_by(asc(User_table.age)).filter(User_table.age <= age_to, User_table.age >= age_from)
             else:
-                query = query.order_by(desc(User_table.age)).filter(User_table.age <= age_to, User_table.age >= age_from)
+                query = query.order_by(desc(User_table.age)).filter(User_table.age <= age_to,
+                                                                    User_table.age >= age_from)
     else:
         if sort_by == "name":
             if order == 'asc':
@@ -43,8 +46,7 @@ def get_mentors(
                     User_table.age <= age_to, User_table.age >= age_from, Mentor_table.direction.in_(direction))
         elif sort_by == "age":
             if order == 'asc':
-                query = query.order_by(asc(User_table.age)).filter(User_table.age <= age_to,
-                                                                   User_table.age >= age_from,
+                query = query.order_by(asc(User_table.age)).filter(User_table.age <= age_to, User_table.age >= age_from,
                                                                    Mentor_table.direction.in_(direction))
             else:
                 query = query.order_by(desc(User_table.age)).filter(User_table.age <= age_to,
