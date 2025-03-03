@@ -1,9 +1,9 @@
-from fastapi.params import Depends
-from sqlalchemy.orm import Session
-from sqlalchemy import asc, desc
-from fastapi import APIRouter, Query
 from typing import Optional, List
 
+from fastapi import APIRouter, Query
+from fastapi.params import Depends
+from sqlalchemy import asc, desc
+from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 
 from ...database import get_db, User_table, Mentor_table

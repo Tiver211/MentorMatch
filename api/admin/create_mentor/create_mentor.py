@@ -1,18 +1,14 @@
 import os
+from uuid import UUID, uuid4
 
 import jwt
-
-from ...database import get_db, Mentor_table, User_table, Admin_table
-from .base_model import Mentor
+from fastapi import APIRouter, Header
 from fastapi.params import Depends
 from sqlalchemy.orm import Session
-from sqlalchemy import asc, desc
-from fastapi import APIRouter, Query, Header
-from typing import Optional
 from starlette.responses import JSONResponse
-import datetime
-from uuid import UUID, uuid4
-from api.mail.mail import send_email
+
+from .base_model import Mentor
+from ...database import get_db, Mentor_table, User_table, Admin_table
 
 create_menter_router = APIRouter()
 

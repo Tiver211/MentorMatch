@@ -1,29 +1,37 @@
 import os
+from uuid import uuid4
 
 import bcrypt
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from starlette.responses import JSONResponse
 from sqlalchemy.orm import Session
-from uuid import uuid4
-from .database import init_db, Admin_table, SessionLocal
-from .user.user_router import user_router
-from .offer.offer_router import offer_router
+from starlette.responses import JSONResponse
+
 from .admin.admin_router import admin_router
+from .database import init_db, Admin_table, SessionLocal
 from .mentor.mentor_router import mentor_router
+from .offer.offer_router import offer_router
+from .user.user_router import user_router
 
 app = FastAPI(
     openapi_url="/openapi.json",
     docs_url="/docs",
 )
 
+allowed_origins = [
+    "https://prod-team-35-lg7sic6v.final.prodcontest.ru",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "*"
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://prod-team-35-lg7sic6v.final.prodcontest.ru", "https://localhost"],  # Разрешить все домены (или укажите конкретные, например ["https://example.com"])
+    allow_origins=allowed_origins,  # Разрешить все домены (или укажите конкретные, например ["https://example.com"])
     allow_credentials=True,
     allow_methods=["*"],  # Разрешить все методы (GET, POST, PUT, DELETE и т.д.)
-    allow_headers=["*"],  # Разрешить все заголовки
+    allow_headers=["*"],  #  Разрешить все заголовки
 )
 
 app.include_router(user_router, prefix="/api")
