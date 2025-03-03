@@ -23,7 +23,8 @@ services:
       - "443:443"
 
   web:
-    image
+    image: ${CI_REGISTRY_IMAGE}/web:${CI_COMMIT_SHA}
+
 
   postgres:
     image: postgres:15

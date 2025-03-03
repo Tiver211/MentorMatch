@@ -36,11 +36,11 @@ include:
     entrypoint: [""]
   stage: build
   variables:
-    DOCKERFILE_PATH: back/web/Dockerfile  # Указываем путь к Dockerfile фронта
+    DOCKERFILE_PATH: web/Dockerfile  # Путь к Dockerfile для фронта
     DOCKER_CONFIG: /kaniko/.docker
-    CONTEXT: $CI_PROJECT_DIR/back/web  # Указываем контекст для сборки фронта
+    CONTEXT: $CI_PROJECT_DIR/web  # Контекст сборки — папка back/web
     IMAGE_TAG: $CI_COMMIT_SHA
-    IMAGE_NAME: $CI_REGISTRY_IMAGE/web:$IMAGE_TAG  # Используем другое имя для образа фронта
+    IMAGE_NAME: $CI_REGISTRY_IMAGE/web:$IMAGE_TAG  # Имя образа для фронта
     REGISTRY_USER: $CI_REGISTRY_USER
     REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
     REGISTRY_URL: $CI_REGISTRY
@@ -49,7 +49,7 @@ include:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$REGISTRY_USER\",\"password\":\"$REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor
       --context "${CONTEXT}"
-      --dockerfile "${CI_PROJECT_DIR}/${DOCKERFILE_PATH}"
+      --dockerfile "${CI_PROJECT_DIR}/${DOCKERFILE_PATH}"  # Полный путь к Dockerfile
       --destination "${IMAGE_NAME}"
       --cache=True
       --registry-mirror=dockerhub.timeweb.cloud
