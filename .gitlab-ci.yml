@@ -67,7 +67,9 @@ stages:
 
 heltchcheck:
   stage: heltchcheck
-  extends: .heltchcheck
+  extends:
+    - .heltchcheck
+    - .rules-merge-or-master
 
 build:
   stage: build
