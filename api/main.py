@@ -3,6 +3,7 @@ import os
 import bcrypt
 import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 from sqlalchemy.orm import Session
 from uuid import uuid4
@@ -17,6 +18,14 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc"
 )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://prod-team-35-lg7sic6v.final.prodcontest.ru", "https://localhost"],  # Разрешить все домены (или укажите конкретные, например ["https://example.com"])
+    allow_credentials=True,
+    allow_methods=["*"],  # Разрешить все методы (GET, POST, PUT, DELETE и т.д.)
+    allow_headers=["*"],  # Разрешить все заголовки
+)
+
 app.include_router(user_router)
 app.include_router(offer_router)
 app.include_router(admin_router)
