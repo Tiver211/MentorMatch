@@ -60,6 +60,22 @@ include:
   extends: .ssh
   script:
     - ssh $SSH_ADDRES "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose ps"
+  variables:
+    OPT_DOCKER: ""
+    DOCKERFILE_PATH: Dockerfile
+    IMAGE_TAG: $CI_COMMIT_SHA
+    IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_TLS_VERIFY: 1
+    DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
+    DOCKER_DRIVER: overlay2
+    PRUNE_COMMAND: "docker system prune -f -a"
+    CONTAINER_NAME_SUFFIX: ""
+    POSTGRES_USERNAME: $POSTGRES_USERNAME
+    POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    POSTGRES_DATABASE: $POSTGRES_DATABASE
+    POSTGRES_CONN: "postgresql://$POSTGRES_USERNAME:$POSTGRES_PASSWORD@postgres:5432/$POSTGRES_DATABASE"
 
 stages:
   - build
