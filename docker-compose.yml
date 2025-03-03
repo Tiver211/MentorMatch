@@ -8,7 +8,7 @@ services:
       REDIS_CONN: "redis:6380"
 
     healthcheck:
-      test: wget --no-verbose --tries=1 --spider https://prod-team-35-lg7sic6v.final.prodcontest.ru/ping"
+      test: wget --no-verbose --tries=1 --spider https://prod-team-35-lg7sic6v.final.prodcontest.ru/ping
       interval: 30s
       timeout: 20s
       start_period: 5s
