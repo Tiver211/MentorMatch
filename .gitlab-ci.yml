@@ -36,7 +36,7 @@ include:
     entrypoint: [""]
   stage: build
   variables:
-    DOCKERFILE_PATH: Dockerfile  # Путь к Dockerfile для фронта
+    DOCKERFILE_PATH: web/Dockerfile  # Путь к Dockerfile для фронта
     DOCKER_CONFIG: /kaniko/web/.docker
     CONTEXT: $CI_PROJECT_DIR/web  # Контекст сборки — папка back/web
     IMAGE_TAG: $CI_COMMIT_SHA
