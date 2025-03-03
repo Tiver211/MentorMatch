@@ -40,7 +40,7 @@ include:
     DOCKER_CONFIG: /kaniko/web/.docker
     CONTEXT: $CI_PROJECT_DIR/web  # Контекст сборки — папка back/web
     IMAGE_TAG: $CI_COMMIT_SHA
-    IMAGE_NAME: $CI_REGISTRY_IMAGE/web:$IMAGE_TAG 
+    IMAGE_NAME_WEB: $CI_REGISTRY_IMAGE/web:$IMAGE_TAG 
     REGISTRY_USER: $CI_REGISTRY_USER
     REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
     REGISTRY_URL: $CI_REGISTRY
@@ -50,7 +50,7 @@ include:
     - /kaniko/executor
       --context "${CONTEXT}"
       --dockerfile "${CI_PROJECT_DIR}/${DOCKERFILE_PATH}" 
-      --destination "${IMAGE_NAME}"
+      --destination "${IMAGE_NAME_WEB}"
       --cache=True
       --registry-mirror=dockerhub.timeweb.cloud
 
@@ -91,7 +91,8 @@ include:
         && echo 'POSTGRES_PASSWORD=$POSTGRES_PASSWORD' >> .env 
         && echo 'POSTGRES_CONN=$POSTGRES_CONN' >> .env
         && echo 'RANDOM_SECRET=$RANDOM_SECRET' >> .env
-        && echo 'SMTP_PASSWORD=$SMTP_PASSWORD' >> .env"
+        && echo 'SMTP_PASSWORD=$SMTP_PASSWORD' >> .env
+        && echo 'IMAGE_NAME_WEB=$IMAGE_NAME_WEB'"
     - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose down || true"
     - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose up -d"
     - sleep 10
