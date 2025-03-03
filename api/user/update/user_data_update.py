@@ -6,11 +6,12 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 from api.database import get_db, User_table
-from .base_model import User
+from .models.base_model import User
+from .models.responce_model import Response_user
 
 user_update_data_patch = APIRouter()
 
-@user_update_data_patch.patch("/user/profile")
+@user_update_data_patch.patch("/user/profile", status_code=201, response_model=Response_user)
 def post_user(user: User, db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 
@@ -33,5 +34,5 @@ def post_user(user: User, db: Session = Depends(get_db), authorization: str = He
             "contact": user_db.contact
         }
 
-    return JSONResponse(status_code=200, content=result)
+    return result
 
