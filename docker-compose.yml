@@ -11,6 +11,7 @@ services:
       test: apt-get update && sudo apt-get install -y curl && curl -f https://prod-team-35-lg7sic6v.final.prodcontest.ru/ping" | exit 1
       interval: 30s
       timeout: 20s
+      start_period: 5s
       retries: 3
 
     volumes:
