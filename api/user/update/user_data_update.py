@@ -7,11 +7,11 @@ from sqlalchemy.orm import Session
 
 from api.database import get_db, User_table
 from .models.base_model import User
-from .models.responce_model import Response_user
+from .models.responce_model import Response_user_update
 
 user_update_data_patch = APIRouter()
 
-@user_update_data_patch.patch("/user/profile", status_code=201, response_model=Response_user)
+@user_update_data_patch.patch("/user/profile", status_code=200, response_model=Response_user_update)
 def post_user(user: User, db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 

@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from fastapi import APIRouter, Query
 from fastapi.params import Depends
@@ -7,10 +7,11 @@ from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 
 from ...database import get_db, User_table, Mentor_table
+from .response_model import Response_mentor
 
 get_mentors_router = APIRouter()
 
-@get_mentors_router.get("/mentors")
+@get_mentors_router.get("/mentors", status_code=200, response_model=List[Response_mentor])
 def get_mentors(
     db: Session = Depends(get_db),
     sort_by: Optional[str] = Query(None),
@@ -67,4 +68,4 @@ def get_mentors(
         for user in [db.query(User_table).filter(User_table.user_id == mentor.user_id).one()]
     ]
 
-    return JSONResponse(status_code=200, content=result)
+    return result

@@ -1,10 +1,11 @@
 from pydantic import BaseModel
 from uuid import UUID
 
-class Response_user_update(BaseModel):
+class Response_profile(BaseModel):
     user_id: UUID
     first_name: str
     last_name: str
     age: int
     about: str
     contact: str
+    avatar: str
