@@ -20,16 +20,17 @@ services:
 
     ports:
       - "25"
-      - "443:443"
+      - "443"
   web:
     image: ${IMAGE_NAME_WEB}
     volumes:
       - /home/ubuntu/ssl/fullchain.pem:/nginx/ssl/chain.pem
       - /home/ubuntu/ssl/privkey.pem:/nginx/ssl/privkey.pem
+      - /home/ubuntu/ssl/cert.pem:/nginx/ssl/cert.pem
 
     ports:
-      - "5173:443"
-      - "80:80"
+      - "443:443"
+     # - "5173:80"
 
   postgres:
     image: postgres:15
@@ -60,7 +61,6 @@ services:
     ports:
       - "25:25"
       - "587:587"
-      - "443"
       - "2525:2525"
 
 volumes:
