@@ -22,6 +22,9 @@ def get_image(user_id: UUID, db: Session = Depends(get_db)):
 
     avatar = user.avatar
 
+    if not avatar:
+        return JSONResponse(status_code=404, content={"status": "Avatar not found"})
+
     with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as temp_file:
         temp_file.write(avatar)
         temp_file_path = temp_file.name
@@ -44,4 +47,21 @@ async def send_image(file: bytes = Body(...), db: Session = Depends(get_db), aut
     db.commit()
 
     return JSONResponse(status_code=200, content={"status": "OK"})
+
+@get_avatar_router.delete("/user/avatar")
+def delete_image(db: Session = Depends(get_db), authorization: str = Header(...)):
+    token = authorization.split(" ")[1]
+
+    data = jwt.decode(token, os.getenv("RANDOM_SECRET"), algorithms=['HS256'])
+
+    user_db = db.query(User_table).filter(User_table.user_id == data["sub"]).first()
+
+    if not user_db:
+        return JSONResponse(status_code=404, content={"status": "User not found"})
+
+    user_db.avatar = None
+
+    db.commit()
+
+    return JSONResponse(status_code=200, content={"status": "ok"})
 

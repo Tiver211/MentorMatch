@@ -31,7 +31,7 @@ def get_users(db: Session = Depends(get_db), authorization: str = Header(...)):
             "age": user.age,
             "about": user.about,
             "contact": user.contact,
-            "avatar": f"https://prod-team-35-lg7sic6v.final.prodcontest.ru/user/avatar/{str(user.user_id)}"
+            "avatar": f"https://prod-team-35-lg7sic6v.final.prodcontest.ru/user/avatar/{str(user.user_id)}" if user.avatar is not None else None
         }
 
     return JSONResponse(status_code=200, content=result)
