@@ -15,8 +15,8 @@ from .offer.offer_router import offer_router
 from .user.user_router import user_router
 
 app = FastAPI(
-    openapi_url="/openapi.json",
-    docs_url="/docs",
+    openapi_url="/api/openapi.json",
+    docs_url="/api/docs",
 )
 
 allowed_origins = [
