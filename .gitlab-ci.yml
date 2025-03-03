@@ -59,7 +59,7 @@ include:
   stage: heltchcheck
   extends: .ssh
   script:
-    - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker compose ps"
+    - ssh $SSH_ADDRESS "cd /home/ubuntu/$CI_PROJECT_NAME && docker ps --filter 'health=healthy' --format '{{.Names}}' | grep api"
   variables:
     OPT_DOCKER: ""
     DOCKERFILE_PATH: Dockerfile
