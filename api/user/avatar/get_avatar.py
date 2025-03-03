@@ -22,6 +22,9 @@ def get_image(user_id: UUID, db: Session = Depends(get_db)):
 
     avatar = user.avatar
 
+    if not avatar:
+        return JSONResponse(status_code=404, content={"status": "Avatar not found"})
+
     with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as temp_file:
         temp_file.write(avatar)
         temp_file_path = temp_file.name
