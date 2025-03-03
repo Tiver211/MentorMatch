@@ -48,7 +48,7 @@ async def send_image(file: bytes = Body(...), db: Session = Depends(get_db), aut
 
     return JSONResponse(status_code=200, content={"status": "OK"})
 
-@get_avatar_router.delete("user/avatar")
+@get_avatar_router.delete("/user/avatar")
 def delete_image(db: Session = Depends(get_db), authorization: str = Header(...)):
     token = authorization.split(" ")[1]
 
