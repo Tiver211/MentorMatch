@@ -36,6 +36,8 @@
 			console.log(await response.json());
 
 			token = await response.json();
+			localStorage.setItem('token', token);
+			window.location.href = '/mentors';
 		});
 	};
 </script>
