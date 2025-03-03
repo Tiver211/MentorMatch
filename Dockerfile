@@ -5,7 +5,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
-RUN sudo apt install curl
+RUN apt install curl
 
 COPY . /app
 
