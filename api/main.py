@@ -19,12 +19,18 @@ app = FastAPI(
     docs_url="/docs",
 )
 
+allowed_origins = [
+    "https://prod-team-35-lg7sic6v.final.prodcontest.ru",  # Ваш продакшен-домен
+    "http://localhost:5173",  # Svelte (по умолчанию порт 5173)
+    "http://127.0.0.1:5173",  # Альтернативный адрес для localhost
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://prod-team-35-lg7sic6v.final.prodcontest.ru", "https://localhost"],  # Разрешить все домены (или укажите конкретные, например ["https://example.com"])
+    allow_origins=allowed_origins,  # Разрешить все домены (или укажите конкретные, например ["https://example.com"])
     allow_credentials=True,
     allow_methods=["*"],  # Разрешить все методы (GET, POST, PUT, DELETE и т.д.)
-    allow_headers=["*"],  # Разрешить все заголовки
+    allow_headers=["*"],  #  Разрешить все заголовки
 )
 
 app.include_router(user_router, prefix="/api")
