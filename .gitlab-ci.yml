@@ -36,11 +36,11 @@ include:
     entrypoint: [""]
   stage: build
   variables:
-    DOCKERFILE_PATH: web/Dockerfile
+    DOCKERFILE_PATH: back/web/Dockerfile  # Указываем путь к Dockerfile фронта
     DOCKER_CONFIG: /kaniko/.docker
-    CONTEXT: $CI_PROJECT_DIR
+    CONTEXT: $CI_PROJECT_DIR/back/web  # Указываем контекст для сборки фронта
     IMAGE_TAG: $CI_COMMIT_SHA
-    IMAGE_NAME: $CI_REGISTRY_IMAGE:$IMAGE_TAG
+    IMAGE_NAME: $CI_REGISTRY_IMAGE/web:$IMAGE_TAG  # Используем другое имя для образа фронта
     REGISTRY_USER: $CI_REGISTRY_USER
     REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
     REGISTRY_URL: $CI_REGISTRY

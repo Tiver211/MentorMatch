@@ -22,6 +22,9 @@ services:
       - "25"
       - "443:443"
 
+  web:
+    image
+
   postgres:
     image: postgres:15
     environment:
