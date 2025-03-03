@@ -29,11 +29,11 @@ def approve_request(approve: Approve, request_id: UUID, db: Session = Depends(ge
         db.add(new_mentor)
         db.commit()
 
-        send_email(user.contact, "Approve", f"Your request has been approved, your id: {new_mentor.mentor_id}")
+        # send_email(user.contact, "Approve", f"Your request has been approved, your id: {new_mentor.mentor_id}")
 
     else:
         request.status = False
 
         user = db.query(User_table).filter(User_table.user_id == request.user_id).first()
 
-        send_email(user.contact, "Approve", "Sorry but your request has not approved")
+        # send_email(user.contact, "Approve", "Sorry but your request has not approved")
