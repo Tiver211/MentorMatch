@@ -1,24 +1,24 @@
 <script lang="ts">
 	import type { mentorSchema } from '$lib/schemas.js';
-	import { watch } from 'runed';
+	import { onMount } from 'svelte';
 	import type { z } from 'zod';
 
-	let { data } = $props();
-
-	let mentors = data.mentors as Mentor[];
-	let mentorsFiltered = $state(mentors);
+	let mentors: Mentor[] = $state([]);
 
 	// filter fields
 	let ageThreshold: number | undefined = $state();
 
 	type Mentor = z.infer<typeof mentorSchema>;
 
-	watch([() => ageThreshold], () => {
-		mentorsFiltered = mentors;
-		if (ageThreshold)
-			mentorsFiltered = mentors.filter(
-				(mentor: Mentor) => mentor.age && mentor.age >= ageThreshold!
-			);
+	onMount(() => {
+		fetch('https://prod-team-35-lg7sic6v.final.prodcontest.ru/api/mentors').then(
+			async (response) => {
+				if (!response.ok) {
+					throw new Error('fafs');
+				}
+				mentors = await response.json();
+			}
+		);
 	});
 </script>
 
@@ -31,10 +31,9 @@
 {:else}
 	<h1>На данный момент отсутствуют доступные менторы</h1>
 {/if}
-<pre>{JSON.stringify(data)}</pre>
 
 <ul>
-	{#each mentorsFiltered as mentor}
+	{#each mentors as mentor}
 		<li>
 			<div class="row">
 				<div>
@@ -47,7 +46,7 @@
 				</div>
 				<button
 					onclick={() => {
-						window.location.href = '/mentors/' + mentor.mentor_id;
+						window.location.href = '/mentors/profile?mentor_id=' + mentor.mentor_id;
 					}}>Открыть профиль</button
 				>
 			</div>

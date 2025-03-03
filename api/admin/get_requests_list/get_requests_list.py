@@ -1,13 +1,15 @@
 import datetime
+import os
 from typing import Optional
 
-from fastapi import APIRouter, Query
+import jwt
+from fastapi import APIRouter, Query, Header
 from fastapi.params import Depends
 from sqlalchemy import asc, desc
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 
-from ...database import get_db, Mentors_requests_table
+from ...database import get_db, Mentors_requests_table, Admin_table
 
 get_requests_router = APIRouter()
 
@@ -18,8 +20,18 @@ def get_mentor_requests(
     order: Optional[str] = Query('asc'),
     date_from: Optional[datetime.datetime] = Query(None),
     date_to: Optional[datetime.datetime] = Query(None),
-    group_by_status: Optional[bool] = Query(False)
+    group_by_status: Optional[bool] = Query(False),
+    authorization: str = Header(...)
 ):
+    token = authorization.split(" ")[1]
+
+    data = jwt.decode(token, os.getenv("RANDOM_SECRET"), algorithms=['HS256'])
+
+    admin = db.query(Admin_table).filter(Admin_table.admin_id == data["sub"]).first()
+
+    if not admin:
+        return JSONResponse(status_code=403, content={"status": "Admin was not found or you are not admin"})
+
     query = db.query(Mentors_requests_table)
 
     if date_from:

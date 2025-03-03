@@ -1,14 +1,24 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import type { mentorSchema } from '$lib/schemas.js';
+	import { onMount } from 'svelte';
 	import type { z } from 'zod';
-
-	let { data } = $props();
 
 	let enrollmentModal: HTMLDialogElement | undefined = $state();
 
 	type Mentor = z.infer<typeof mentorSchema>;
 
-	let mentor = data.mentor as Mentor;
+	let mentor: Mentor | undefined = $state();
+
+	onMount(() => {
+		fetch(
+			'https://prod-team-35-lg7sic6v.final.prodcontest.ru/api/mentors/' +
+				page.url.searchParams.get('mentor_id')
+		).then(async (response) => {
+			mentor = await response.json();
+			console.log(mentor);
+		});
+	});
 </script>
 
 {#if mentor}
