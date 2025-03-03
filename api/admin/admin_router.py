@@ -9,7 +9,7 @@ from .get_requests_list.get_requests_list import get_requests_router
 from .get_user_by_id.get_user_by_id import get_user_router
 from .get_users_list.get_users_list import get_users_router
 
-admin_router = APIRouter()
+admin_router = APIRouter(tags=["Admins"])
 
 admin_router.include_router(admin_auth_sign_in_router)
 admin_router.include_router(get_requests_router)
