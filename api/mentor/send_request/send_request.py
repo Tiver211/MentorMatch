@@ -19,7 +19,7 @@ def send_request(request: Request, db: Session = Depends(get_db), authorization:
 
     data = jwt.decode(token, os.getenv("RANDOM_SECRET"), algorithms=['HS256'])
 
-    new_request = Mentors_requests_table(request_id=uuid4(), user_id=data["user_id"], about=request.about, direction=request.directions, date=datetime.datetime.now(), status=False)
+    new_request = Mentors_requests_table(request_id=uuid4(), user_id=data["sub"], about=request.about, direction=request.directions, date=datetime.datetime.now(), status=False)
 
     db.add(new_request)
     db.commit()
