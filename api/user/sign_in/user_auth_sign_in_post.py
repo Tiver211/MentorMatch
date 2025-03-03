@@ -9,7 +9,6 @@ from sqlalchemy.orm import Session
 
 from api.database import get_db, User_table
 from api.user.sign_in.base_model import User
-from api.mail.mail import send_email
 
 user_auth_sign_in_router = APIRouter()
 

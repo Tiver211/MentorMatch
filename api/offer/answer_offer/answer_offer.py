@@ -1,16 +1,11 @@
-import os
-import random
+from uuid import UUID, uuid4
 
-import jwt
-from fastapi import APIRouter, Depends, Header
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 
-from ...database import get_db, User_table, Mentor_table, Offer_table, Students_table
 from .base_model import Answer
-from api.mail.mail import send_email
-
-from uuid import UUID, uuid4
+from ...database import get_db, User_table, Mentor_table, Offer_table, Students_table
 
 answer_offer_router = APIRouter()
 
