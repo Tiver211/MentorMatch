@@ -20,7 +20,7 @@ services:
 
     ports:
       - "25"
-      - "5173:443"
+      - "443"
   web:
     image: ${IMAGE_NAME_WEB}
     volumes:
@@ -61,7 +61,6 @@ services:
     ports:
       - "25:25"
       - "587:587"
-      - "443"
       - "2525:2525"
 
 volumes:
