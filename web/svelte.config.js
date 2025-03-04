@@ -8,11 +8,7 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		adapter: adapter({
-			fallback: 'index.html',
-      trailingSlash: 'always'
-		}
-		)
+		adapter: adapter()
 	}
 };
 
