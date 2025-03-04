@@ -59,6 +59,7 @@
 					}
 					throw new Error('');
 				}
+
 				done = true;
 			});
 		}
