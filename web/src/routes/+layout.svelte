@@ -26,15 +26,15 @@
 					headers: {
 						authorization: 'Bearer ' + token
 					}
-				}).then(async (response) => {
-					if (response.ok) {
-						user = await response.json();
+				}).then(async (response1) => {
+					if (response1.ok) {
+						user = await response1.json();
 					} else {
 						localStorage.removeItem('token');
 						window.location.href = '/';
 					}
 				});
-			} else isAdmin = await response.json();
+			} else isAdmin = responseJson;
 		});
 	}
 </script>
