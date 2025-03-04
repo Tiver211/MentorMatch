@@ -38,9 +38,9 @@
 
 <h1>Вход в аккаунт администратора</h1>
 <form method="POST" {onsubmit}>
-	<label for="email">
+	<label for="login">
 		Логин
-		<input type="email" name="email" id="email" />
+		<input type="text" name="login" id="login" />
 	</label>
 	<label for="password">
 		Пароль

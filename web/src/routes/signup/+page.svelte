@@ -7,10 +7,10 @@
 		login: '',
 		password: '',
 		first_name: '',
-		last_name: undefined,
-		age: undefined,
+		last_name: '',
+		age: 0,
 		about: undefined,
-		contact: undefined
+		contact: ''
 	});
 
 	let validationErrorWarning: HTMLParagraphElement | undefined = $state();

@@ -12,10 +12,10 @@
 		promise = fetch('https://prod-team-35-lg7sic6v.final.prodcontest.ru/api/user/profile', {
 			method: 'GET',
 			headers: {
-				authorization: token
+				authorization: 'Bearer ' + token
 			}
 		}).then(async (response) => {
-			user = await response.json();
+			if (response.ok) user = await response.json();
 		});
 	}
 </script>
@@ -25,7 +25,26 @@
 		<h1>Проверка авторизации</h1>
 	{:then}
 		{#if user}
-			<h1>Управление аккантом</h1>
+			<h1>{user.first_name} {user.last_name}</h1>
+			<h3>Информация об аккаунте</h3>
+			<p>
+				<b>Имя:</b>
+				{user.first_name}
+				<br />
+				<b>Фамилия:</b>
+				{user.last_name}
+				<br />
+				<b>Возраст:</b>
+				{user.age}
+				<br />
+				<b>Электронная почта:</b>
+				{user.contact}
+				<br />
+				<b>О себе:</b>
+				<span class="break-word">{user.about ? user.about : 'Пусто'}</span>
+			</p>
+
+			<h3>Управление аккаунтом</h3>
 			<input
 				type="button"
 				value="Редактировать аккаунт"
@@ -37,8 +56,7 @@
 				type="button"
 				value="Выйти из аккаунта"
 				onclick={() => {
-					localStorage.removeItem('isAdmin');
-					localStorage.removeItem('loggedIn');
+					localStorage.clear();
 					window.location.href = '/';
 				}}
 				class="red"
@@ -69,5 +87,9 @@
 	.red {
 		background-color: #be3144;
 		border: none;
+	}
+
+	.break-word {
+		word-break: break-all;
 	}
 </style>
