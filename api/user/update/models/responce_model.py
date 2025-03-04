@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 from uuid import UUID
 
 class Response_user_update(BaseModel):
@@ -6,5 +7,5 @@ class Response_user_update(BaseModel):
     first_name: str
     last_name: str
     age: int
-    about: str
-    contact: str
+    about: Optional[str]
+    contact: Optional[str]
