@@ -10,3 +10,4 @@ class Response_profile(BaseModel):
     about: Optional[str]
     contact: str
     avatar: Optional[str]
+    is_mentor: bool
