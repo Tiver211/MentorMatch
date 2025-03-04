@@ -22,6 +22,7 @@
 	let promise: any = $state();
 	const sendForm = (event: Event) => {
 		event.preventDefault();
+		localStorage.clear();
 		promise = undefined;
 		promise = fetch('https://prod-team-35-lg7sic6v.final.prodcontest.ru/api/user/auth/sign-up', {
 			method: 'POST',
@@ -43,7 +44,6 @@
 				throw new Error('');
 			}
 			emailVerificationLink = (await response.json()).verify_url;
-			console.log(emailVerificationLink);
 
 			isVerificationWindowShown = true;
 		});
