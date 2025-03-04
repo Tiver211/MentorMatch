@@ -66,7 +66,7 @@ class Mentors_requests_table(Base):
     about: str = Column(Text, nullable=False)
     direction: str = Column(String, nullable=False)
     date: datetime.datetime = Column(TIMESTAMP, nullable=False)
-    status: bool = Column(Boolean, default=False, nullable=False)
+    status: bool = Column(Boolean, nullable=True)
 
 class Offer_table(Base):
     __tablename__ = "offers"
