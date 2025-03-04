@@ -36,7 +36,7 @@
 
 			const token = (await response.json()).token;
 			localStorage.setItem('token', token);
-			window.location.href = '/admin';
+			window.location.href = '/asuy5kjh2i34hk23';
 		});
 	};
 </script>

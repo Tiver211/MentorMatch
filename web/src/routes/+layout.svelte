@@ -89,7 +89,7 @@
 		{/if}
 		{#if isAdmin}
 			<li>
-				<a href="/admin">Админ-панель</a>
+				<a href="/asuy5kjh2i34hk23">Админ-панель</a>
 			</li>
 		{/if}
 	</ul>
