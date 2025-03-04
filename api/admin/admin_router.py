@@ -9,6 +9,7 @@ from .get_requests_list.get_requests_list import get_requests_router
 from .get_user_by_id.get_user_by_id import get_user_router
 from .get_users_list.get_users_list import get_users_router
 from .is_admin.is_admin import is_admin_router
+from .delete_mentor.delete_mentor import delete_mentor_router
 
 admin_router = APIRouter(tags=["Admins"])
 
@@ -21,3 +22,4 @@ admin_router.include_router(get_users_router)
 admin_router.include_router(get_user_router)
 admin_router.include_router(create_menter_router)
 admin_router.include_router(is_admin_router)
+admin_router.include_router(delete_mentor_router)
