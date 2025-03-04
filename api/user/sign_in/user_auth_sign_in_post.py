@@ -21,7 +21,7 @@ def post_user(user: User, db: Session = Depends(get_db)):
         return JSONResponse(status_code=404, content={"status": "User was not found"})
 
     if not(bcrypt.checkpw(user.password.encode("utf-8"), user_db.password.encode("utf-8"))):
-        return JSONResponse(status_code=403, content={"status": "Invalid password"})
+        return JSONResponse(status_code=404, content={"status": "Invalid password"})
 
     token_payload = {
         "sub": str(user_db.user_id),

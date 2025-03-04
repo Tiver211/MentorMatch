@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 from uuid import UUID
 
 class Response_mentor(BaseModel):
@@ -9,4 +10,4 @@ class Response_mentor(BaseModel):
     direction: str
     about: str
     contact: str
-    avatar: str
+    avatar: Optional[str]
