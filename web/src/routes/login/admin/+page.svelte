@@ -8,10 +8,10 @@
 
 	type LoginParams = z.infer<typeof loginParamsSchema>;
 
-	let loginParams: LoginParams = {
+	let loginParams: LoginParams = $state({
 		login: '',
 		password: ''
-	};
+	});
 
 	let invalidCredentialsWarning: HTMLParagraphElement | undefined;
 
@@ -20,18 +20,23 @@
 		event.preventDefault();
 		if (invalidCredentialsWarning) invalidCredentialsWarning.hidden = true;
 		promise = undefined;
-		promise = fetch('/api/admin/secret-url', {
+		promise = fetch('https://prod-team-35-lg7sic6v.final.prodcontest.ru/api/admin/secret-url', {
 			method: 'POST',
 			body: JSON.stringify(loginParams),
 			headers: {
 				'Content-type': 'application/json; charset=UTF-8'
 			}
-		}).then((response) => {
+		}).then(async (response) => {
 			if (!response.ok) {
-				if (response.status === 422 && invalidCredentialsWarning) {
+				if (response.status === 404 && invalidCredentialsWarning) {
 					invalidCredentialsWarning.hidden = false;
 				}
+				return;
 			}
+
+			const token = (await response.json()).token;
+			localStorage.setItem('token', token);
+			window.location.href = '/asuy5kjh2i34hk23';
 		});
 	};
 </script>
@@ -40,11 +45,11 @@
 <form method="POST" {onsubmit}>
 	<label for="login">
 		Логин
-		<input type="text" name="login" id="login" />
+		<input type="text" name="login" id="login" bind:value={loginParams.login} />
 	</label>
 	<label for="password">
 		Пароль
-		<input type="password" name="password" id="password" />
+		<input type="password" name="password" id="password" bind:value={loginParams.password} />
 	</label>
 	<p id="invalid-credentials" bind:this={invalidCredentialsWarning} hidden>
 		Неверный логин или пароль

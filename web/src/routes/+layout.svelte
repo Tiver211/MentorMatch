@@ -1,7 +1,6 @@
 <script lang="ts">
 	import '../pico.indigo.min.css';
 	import '../app.css';
-	import { browser } from '$app/environment';
 	import type { z } from 'zod';
 	import type { userSchema } from '$lib/schemas';
 	let { children } = $props();
@@ -10,16 +9,32 @@
 
 	let token: string | null = localStorage.getItem('token');
 	let user: User | undefined = $state();
+	let isAdmin: boolean | undefined = $state();
 
-	let promise: any = $state();
 	if (token) {
-		promise = fetch('https://prod-team-35-lg7sic6v.final.prodcontest.ru/api/user/profile', {
-			method: 'GET',
+		fetch('https://prod-team-35-lg7sic6v.final.prodcontest.ru/api/check', {
+			method: 'POST',
 			headers: {
 				authorization: 'Bearer ' + token
 			}
 		}).then(async (response) => {
-			if (response.ok) user = await response.json();
+			const responseJson = await response.json();
+
+			if (!response.ok || responseJson === false) {
+				fetch('https://prod-team-35-lg7sic6v.final.prodcontest.ru/api/user/profile', {
+					method: 'GET',
+					headers: {
+						authorization: 'Bearer ' + token
+					}
+				}).then(async (response1) => {
+					if (response1.ok) {
+						user = await response1.json();
+					} else {
+						localStorage.removeItem('token');
+						window.location.href = '/';
+					}
+				});
+			} else isAdmin = responseJson;
 		});
 	}
 </script>
@@ -32,9 +47,19 @@
 		<nav>
 			{@render links()}
 		</nav>
-		<a href={user ? '/profile' : '/login'} class="auth-btn">
-			<p>{user ? 'Профиль' : 'Авторизация'}</p>
-		</a>
+		{#if !isAdmin}
+			<a href={user ? '/profile' : '/login'} class="auth-btn">
+				<p>{user ? 'Профиль' : 'Авторизация'}</p>
+			</a>
+		{:else}
+			<button
+				type="button"
+				onclick={() => {
+					localStorage.clear();
+					window.location.href = '/';
+				}}>Выйти</button
+			>
+		{/if}
 	</div>
 </header>
 
@@ -62,9 +87,9 @@
 				<a href="/mentors/apply">Стать ментором</a>
 			</li>
 		{/if}
-		{#if false}
+		{#if isAdmin}
 			<li>
-				<a href="/admin">Админ-панель</a>
+				<a href="/asuy5kjh2i34hk23">Админ-панель</a>
 			</li>
 		{/if}
 	</ul>
@@ -89,6 +114,12 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+	}
+
+	.nav-container > button {
+		padding: 0 0.25em;
+		margin-bottom: 0;
+		transform: scale(0.9);
 	}
 
 	ul {
