@@ -58,6 +58,7 @@ def get_mentor_requests(
     result = [
         {
             "request_id": str(request.request_id),
+            "user_id": str(request.user_id),
             "about": request.about,
             "direction": request.direction,
             "date": request.date.isoformat(),

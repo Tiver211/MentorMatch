@@ -1,6 +1,8 @@
+import os
 from uuid import UUID, uuid4
 
-from fastapi import APIRouter, Depends
+import jwt
+from fastapi import APIRouter, Depends, Header
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 
@@ -10,22 +12,22 @@ from ...database import get_db, User_table, Mentor_table, Offer_table, Students_
 
 answer_offer_router = APIRouter()
 
-@answer_offer_router.post("/mentors/{mentor_id}/offers/{user_id}", status_code=200, response_model=Response_offer)
-def answer_offer(answer: Answer, mentor_id: UUID, user_id: UUID, db: Session = Depends(get_db)):
-    user = db.query(User_table).filter(User_table.user_id == user_id).first()
+@answer_offer_router.post("/mentors/offers/{offer_id}", status_code=200, response_model=Response_offer)
+def answer_offer(answer: Answer, offer_id: UUID, db: Session = Depends(get_db), authorization: str = Header(...)):
+    token = authorization.split(" ")[1]
 
-    if not user:
-        return JSONResponse(status_code=404, content={"status": "User not found"})
+    user_data = jwt.decode(token, os.getenv("RANDOM_SECRET"), algorithms=['HS256'])
 
-    mentor = db.query(User_table).join(Mentor_table).filter(User_table.user_id == Mentor_table.user_id, Mentor_table.mentor_id == mentor_id).first()
+    mentor = db.query(User_table).filter(User_table.user_id == user_data["sub"]).first()
 
-    if not mentor:
-        return JSONResponse(status_code=404, content={"status": "Mentor not found"})
+    mentor_id = db.query(Mentor_table).filter(Mentor_table.user_id == mentor.user_id).first()
+
+    offer = db.query(Offer_table).filter(Offer_table.offer_id == offer_id).first()
 
     if answer.status:
         # send_email("Your offer was accepted", f"Contact of mentor {mentor.contact}", user.contact)
 
-        new_student = Students_table(id=uuid4(), mentor_id=mentor_id, user_id=user_id)
+        new_student = Students_table(id=uuid4(), mentor_id=mentor_id, user_id=offer.user_id)
 
         offer = db.query(Offer_table).filter(Offer_table.offer_id == answer.offer_id).first()
 
@@ -36,11 +38,9 @@ def answer_offer(answer: Answer, mentor_id: UUID, user_id: UUID, db: Session = D
 
         result = \
             {
-                "offer_id": f"{offer.offer_id}",
-                "mentor_id": f"{offer.mentor_id}",
-                "user_id": f"{offer.user_id}",
-                "message": f"{offer.message}",
-                "date": offer.date
+                "student_id": f"{new_student.id}",
+                "mentor_id": f"{new_student.mentor_id}",
+                "user_id": f"{new_student.user_id}"
             }
 
         return result
@@ -53,4 +53,4 @@ def answer_offer(answer: Answer, mentor_id: UUID, user_id: UUID, db: Session = D
 
         db.commit()
 
-        return JSONResponse(status_code=200, content={"status": "Mentor does not accepted offer"})
+        return JSONResponse(status_code=204, content={"status": "Mentor does not accepted offer"})
