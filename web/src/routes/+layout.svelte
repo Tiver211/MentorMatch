@@ -2,13 +2,25 @@
 	import '../pico.indigo.min.css';
 	import '../app.css';
 	import { browser } from '$app/environment';
+	import type { z } from 'zod';
+	import type { userSchema } from '$lib/schemas';
 	let { children } = $props();
 
-	let loggedIn: boolean = $state(false);
-	let isAdmin: boolean = $state(false);
-	if (browser) {
-		loggedIn = localStorage.getItem('loggedIn') ? true : false;
-		isAdmin = localStorage.getItem('isAdmin') ? true : false;
+	type User = z.infer<typeof userSchema>;
+
+	let token: string | null = localStorage.getItem('token');
+	let user: User | undefined = $state();
+
+	let promise: any = $state();
+	if (token) {
+		promise = fetch('https://prod-team-35-lg7sic6v.final.prodcontest.ru/api/user/profile', {
+			method: 'GET',
+			headers: {
+				authorization: 'Bearer ' + token
+			}
+		}).then(async (response) => {
+			if (response.ok) user = await response.json();
+		});
 	}
 </script>
 
@@ -20,8 +32,8 @@
 		<nav>
 			{@render links()}
 		</nav>
-		<a href={loggedIn ? '/profile' : '/login'} class="auth-btn">
-			<p>{loggedIn ? 'Профиль' : 'Авторизация'}</p>
+		<a href={user ? '/profile' : '/login'} class="auth-btn">
+			<p>{user ? 'Профиль' : 'Авторизация'}</p>
 		</a>
 	</div>
 </header>
@@ -45,12 +57,12 @@
 		<li>
 			<a href="/mentors">Наши менторы</a>
 		</li>
-		{#if loggedIn}
+		{#if user}
 			<li>
 				<a href="/mentors/apply">Стать ментором</a>
 			</li>
 		{/if}
-		{#if isAdmin}
+		{#if false}
 			<li>
 				<a href="/admin">Админ-панель</a>
 			</li>
@@ -64,8 +76,6 @@
 	}
 
 	header {
-		width: 100%;
-
 		display: flex;
 		align-items: center;
 		margin: 12px 0px;
