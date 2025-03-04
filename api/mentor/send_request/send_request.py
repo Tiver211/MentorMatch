@@ -31,7 +31,7 @@ def send_request(request: Request, db: Session = Depends(get_db), authorization:
             "about": new_request.about,
             "direction": new_request.direction,
             "date": new_request.date,
-            "status": new_request.status
+            "status": new_request.status if new_request.status is not None else None
         }
 
     return result
