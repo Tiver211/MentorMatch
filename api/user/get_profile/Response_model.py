@@ -9,3 +9,4 @@ class Response_profile(BaseModel):
     about: str
     contact: str
     avatar: str
+    is_mentor: bool
