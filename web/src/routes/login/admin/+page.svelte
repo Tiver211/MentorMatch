@@ -12,12 +12,14 @@
 		login: '',
 		password: ''
 	});
+	let isAdmin: boolean = $state(false);
 
 	let invalidCredentialsWarning: HTMLParagraphElement | undefined;
 
 	let promise = $state();
 	const onsubmit = (event: Event) => {
 		event.preventDefault();
+		localStorage.clear();
 		if (invalidCredentialsWarning) invalidCredentialsWarning.hidden = true;
 		promise = undefined;
 		promise = fetch('https://prod-team-35-lg7sic6v.final.prodcontest.ru/api/admin/secret-url', {
@@ -27,14 +29,18 @@
 				'Content-type': 'application/json; charset=UTF-8'
 			}
 		}).then(async (response) => {
+			let responseBody;
 			if (!response.ok) {
 				if (response.status === 404 && invalidCredentialsWarning) {
 					invalidCredentialsWarning.hidden = false;
 				}
 				return;
+			} else {
+				responseBody = await response.json();
+				isAdmin = responseBody;
 			}
 
-			const token = (await response.json()).token;
+			const token = responseBody.token;
 			localStorage.setItem('token', token);
 			window.location.href = '/asuy5kjh2i34hk23';
 		});
