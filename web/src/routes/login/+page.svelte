@@ -8,10 +8,10 @@
 
 	type LoginParams = z.infer<typeof loginParamsSchema>;
 
-	let loginParams: LoginParams = {
+	let loginParams: LoginParams = $state({
 		login: '',
 		password: ''
-	};
+	});
 	let token: string = '';
 
 	let invalidCredentialsWarning: HTMLParagraphElement | undefined;
@@ -32,10 +32,10 @@
 				if (response.status === 404 && invalidCredentialsWarning) {
 					invalidCredentialsWarning.hidden = false;
 				}
+				return;
 			}
-			console.log(await response.json());
 
-			token = await response.json();
+			token = (await response.json()).token;
 			localStorage.setItem('token', token);
 			window.location.href = '/mentors';
 		});
@@ -49,11 +49,11 @@
 <form method="POST" {onsubmit}>
 	<label for="login">
 		Логин
-		<input type="text" name="login" id="login" />
+		<input type="text" name="login" id="login" bind:value={loginParams.login} />
 	</label>
 	<label for="password">
 		Пароль
-		<input type="password" name="password" id="password" />
+		<input type="password" name="password" id="password" bind:value={loginParams.password} />
 	</label>
 	<p id="invalid-credentials" bind:this={invalidCredentialsWarning} hidden>
 		Неверный логин или пароль
